@@ -68,46 +68,47 @@ class _MyHomePageState extends State<MyHomePage> {
         throw UnimplementedError('no widget for $selectedIndex');
     }
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Scaffold(
-          body: Row(
-            children: [
-              SafeArea(
-                child: NavigationRail(
-                  extended: constraints.maxWidth >= 500,
-                  destinations: [
-                    NavigationRailDestination(
-                      icon: Icon(Icons.home),
-                      label: Text('Home'),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.favorite),
-                      label: Text('Favorites'),
-                    ),
-                  ],
-                  selectedIndex: selectedIndex,
-                  onDestinationSelected: (value) {
-                    setState(() {
-                      selectedIndex = value;
-                    });
-                  },
-                ),
+    return LayoutBuilder(builder: (context, constraints) {
+      return Scaffold(
+        bottomNavigationBar: NavigationBar(
+          onDestinationSelected: (int index) {
+            setState(() {
+              selectedIndex = index;
+            });
+          },
+          indicatorColor: Colors.amber[800],
+          selectedIndex: selectedIndex,
+          destinations: const <Widget>[
+            NavigationDestination(
+              selectedIcon: Icon(Icons.home),
+              icon: Icon(Icons.home_outlined),
+              label: 'Home',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.business),
+              label: 'Business',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.school),
+              icon: Icon(Icons.school_outlined),
+              label: 'School',
+            ),
+          ],
+        ),
+        body: Row(
+          children: [
+            Expanded(
+              child: Container(
+                color: Theme.of(context).colorScheme.primaryContainer,
+                child: page,
               ),
-              Expanded(
-                child: Container(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  child: page,
-                ),
-              ),
-            ],
-          ),
-        );
-      }
-    );
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
-
 
 class GeneratorPage extends StatelessWidget {
   @override
@@ -168,7 +169,7 @@ class FavoritesPage extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: ListView(        
+        child: ListView(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Padding(
@@ -208,7 +209,11 @@ class BigCard extends StatelessWidget {
       color: theme.colorScheme.primary,
       child: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Text(pair.asLowerCase, style: style, semanticsLabel: "${pair.first} ${pair.second}",),
+        child: Text(
+          pair.asLowerCase,
+          style: style,
+          semanticsLabel: "${pair.first} ${pair.second}",
+        ),
       ),
     );
   }
