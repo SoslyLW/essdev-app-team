@@ -64,6 +64,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         page = FavoritesPage();
         break;
+      case 2:
+        page = Placeholder();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -215,6 +218,24 @@ class BigCard extends StatelessWidget {
           semanticsLabel: "${pair.first} ${pair.second}",
         ),
       ),
+    );
+  }
+}
+
+class ToolCard extends StatelessWidget {
+  const ToolCard({
+    super.key,
+    required this.toolID,
+  });
+
+  final int toolID;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Card(
+      
     );
   }
 }
