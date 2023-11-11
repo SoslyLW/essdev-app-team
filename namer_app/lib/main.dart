@@ -1,5 +1,6 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:namer_app/messages.dart';
 import 'package:provider/provider.dart';
 import 'package:namer_app/communities.dart';
@@ -18,23 +19,28 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Namer App',
         theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme(
-              background: Color(0xFFFFEBBA), //Used for bottom naviagation bar
-              primary: Color(0xffFFF6D9), //Backkground/main colour of screens
-              onPrimary: Color(0xff241d0f),
-              secondary: Color(0xFFf5ab00), //Main orange colour
-              onSecondary: Color(0xff241d0f),
-              tertiary: Color(0xffd5dad2), //Secondary colour
-              onTertiary: Color(0xff241d0f),
-              onBackground: Color(0xff241d0f),
-              brightness: Brightness.light,
-              error: Colors.red,
-              onError: Colors.white,
-              surface:
-                  Color(0xFFf5ab00), //Default background for card-like widgets
-              onSurface: Color(0xff241d0f)),
-        ),
+            useMaterial3: true,
+            colorScheme: ColorScheme(
+                background: Color(0xFFFFEBBA), //Used for bottom naviagation bar
+                primary: Color(0xffFFF6D9), //Backkground/main colour of screens
+                onPrimary: Color(0xff241d0f),
+                secondary: Color(0xFFf5ab00), //Main orange colour
+                onSecondary: Color(0xff241d0f),
+                tertiary: Color(0xffd5dad2), //Secondary colour
+                onTertiary: Color(0xff241d0f),
+                onBackground: Color(0xff241d0f),
+                brightness: Brightness.light,
+                error: Colors.red,
+                onError: Colors.white,
+                surface: Color(
+                    0xFFf5ab00), //Default background for card-like widgets
+                onSurface: Color(0xff241d0f)),
+            textTheme: TextTheme(
+                titleLarge: GoogleFonts.notoSans(
+                    fontSize: 57, fontWeight: FontWeight.normal),
+                titleSmall: GoogleFonts.notoSans(
+                  fontSize: 36,
+                ))),
         home: MyHomePage(),
       ),
     );

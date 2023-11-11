@@ -48,7 +48,13 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
           ),
         ),
         //Title
-        Text('Browse Communities'),
+        Text(
+          'Browse Communities',
+          style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
+          textAlign: TextAlign.left,
+        ),
         //Search Bar
         SearchAnchor(
             builder: (BuildContext context, SearchController controller) {
