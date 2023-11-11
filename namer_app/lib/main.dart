@@ -20,18 +20,20 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme(
-              background: Color(0xffede2ca),
-              primary: Color(0xFFf5ab00),
+              background: Color(0xFFFFEBBA), //Used for bottom naviagation bar
+              primary: Color(0xffFFF6D9), //Backkground/main colour of screens
               onPrimary: Color(0xff241d0f),
-              secondary: Color(0xffd5dad2),
+              secondary: Color(0xFFf5ab00), //Main orange colour
               onSecondary: Color(0xff241d0f),
+              tertiary: Color(0xffd5dad2), //Secondary colour
+              onTertiary: Color(0xff241d0f),
               onBackground: Color(0xff241d0f),
               brightness: Brightness.light,
               error: Colors.red,
               onError: Colors.white,
-              surface: Color(0xffEDE2CA),
+              surface:
+                  Color(0xFFf5ab00), //Default background for card-like widgets
               onSurface: Color(0xff241d0f)),
-          // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
         ),
         home: MyHomePage(),
       ),
@@ -95,7 +97,8 @@ class _MyHomePageState extends State<MyHomePage> {
               selectedIndex = index;
             });
           },
-          indicatorColor: Colors.amber[800],
+          indicatorColor: Theme.of(context).colorScheme.secondary,
+          backgroundColor: Theme.of(context).colorScheme.background,
           selectedIndex: selectedIndex,
           destinations: const <Widget>[
             NavigationDestination(
