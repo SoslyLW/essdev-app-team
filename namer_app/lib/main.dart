@@ -1,5 +1,6 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+import 'package:namer_app/messages.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -60,10 +61,10 @@ class _MyHomePageState extends State<MyHomePage> {
     switch (selectedIndex) {
       case 0:
         page = GeneratorPage();
-        break;
       case 1:
         page = FavoritesPage();
-        break;
+      case 2:
+        page = MessagesPage();
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -89,9 +90,9 @@ class _MyHomePageState extends State<MyHomePage> {
               label: 'Business',
             ),
             NavigationDestination(
-              selectedIcon: Icon(Icons.school),
-              icon: Icon(Icons.school_outlined),
-              label: 'School',
+              selectedIcon: Icon(Icons.message),
+              icon: Icon(Icons.message_outlined),
+              label: 'Messages',
             ),
           ],
         ),
