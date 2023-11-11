@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:namer_app/communities.dart';
 
 void main() {
   runApp(MyApp());
@@ -64,6 +65,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 1:
         page = FavoritesPage();
         break;
+      case 3:
+        page = CommunitiesHomePage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -92,6 +96,11 @@ class _MyHomePageState extends State<MyHomePage> {
               selectedIcon: Icon(Icons.school),
               icon: Icon(Icons.school_outlined),
               label: 'School',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.people_alt),
+              icon: Icon(Icons.people_alt_outlined),
+              label: 'Communities',
             ),
           ],
         ),
