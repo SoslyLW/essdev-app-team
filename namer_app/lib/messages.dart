@@ -125,7 +125,7 @@ class _MessagesPageState extends State<MessagesPage> {
     final theme = Theme.of(context);
 
     return Scaffold(
-        backgroundColor: theme.colorScheme.background,
+        backgroundColor: theme.colorScheme.primary,
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(
