@@ -35,11 +35,9 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
     final theme = Theme.of(context);
 
     return Container(
-      color: theme.colorScheme.background,
       child: Column(
         children: [
           //Something for the top bar
@@ -52,35 +50,25 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
           //Title
           Text('Browse Communities'),
           //Search Bar
-          SearchAnchor(
-              builder: (BuildContext context, SearchController controller) {
-            return SearchBar(
-              backgroundColor: MaterialStateProperty.all(Colors.white),
-              controller: controller,
-              padding: const MaterialStatePropertyAll<EdgeInsets>(
-                  EdgeInsets.symmetric(horizontal: 16.0)),
-              onTap: () {
-                controller.openView();
-              },
-              onChanged: (_) {
-                controller.openView();
-              },
-              leading: const Icon(Icons.search),
-            );
-          }, suggestionsBuilder:
-                  (BuildContext context, SearchController controller) {
-            return List<ListTile>.generate(5, (int index) {
-              final String item = 'item $index';
-              return ListTile(
-                title: Text(item),
-                onTap: () {
-                  setState(() {
-                    controller.closeView(item);
-                  });
-                },
-              );
-            });
-          }),
+          Padding(
+            padding: EdgeInsets.only(top: 16, left: 16, right: 16),
+            child: TextField(
+              decoration: InputDecoration(
+                  hintText: "Search...",
+                  hintStyle: TextStyle(color: Colors.grey.shade600),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.grey.shade600,
+                    size: 20,
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey.shade100,
+                  contentPadding: EdgeInsets.all(8),
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(color: Colors.grey.shade100))),
+            ),
+          ),
           //Items (Scrollable)
           Expanded(
             child: Padding(
@@ -92,7 +80,7 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
                 physics: NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   return Card(
-                      color: theme.colorScheme.primary,
+                      color: theme.colorScheme.secondary,
                       child: ListTile(
                           leading: communities[index].icon,
                           title: Text(communities[index].name)));
