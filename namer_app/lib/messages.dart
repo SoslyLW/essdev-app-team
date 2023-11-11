@@ -123,8 +123,9 @@ class _MessagesPageState extends State<MessagesPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Scaffold(
-        backgroundColor: Color(0xffede2ca),
+        backgroundColor: theme.colorScheme.background,
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(
