@@ -2,6 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/messages.dart';
 import 'package:provider/provider.dart';
+import 'package:namer_app/communities.dart';
 
 void main() {
   runApp(MyApp());
@@ -63,8 +64,13 @@ class _MyHomePageState extends State<MyHomePage> {
         page = GeneratorPage();
       case 1:
         page = FavoritesPage();
+        break;
       case 2:
         page = MessagesPage();
+        break;
+      case 3:
+        page = CommunitiesHomePage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -93,6 +99,11 @@ class _MyHomePageState extends State<MyHomePage> {
               selectedIcon: Icon(Icons.message),
               icon: Icon(Icons.message_outlined),
               label: 'Messages',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.people_alt),
+              icon: Icon(Icons.people_alt_outlined),
+              label: 'Communities',
             ),
           ],
         ),
