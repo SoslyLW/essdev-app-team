@@ -222,21 +222,3 @@ class BigCard extends StatelessWidget {
     );
   }
 }
-
-// class ToolCard extends StatelessWidget {
-//   const ToolCard({
-//     super.key,
-//     required this.toolID,
-//   });
-
-//   final int toolID;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final theme = Theme.of(context);
-
-//     return Card(
-      
-//     );
-//   }
-// }
