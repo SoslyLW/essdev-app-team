@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:namer_app/screens/toolCardPage.dart';
 
 void main() {
   runApp(MyApp());
@@ -65,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = FavoritesPage();
         break;
       case 2:
-        page = Placeholder();
+        page = ToolCardPage(toolID: 1,);
         break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
@@ -222,20 +223,20 @@ class BigCard extends StatelessWidget {
   }
 }
 
-class ToolCard extends StatelessWidget {
-  const ToolCard({
-    super.key,
-    required this.toolID,
-  });
+// class ToolCard extends StatelessWidget {
+//   const ToolCard({
+//     super.key,
+//     required this.toolID,
+//   });
 
-  final int toolID;
+//   final int toolID;
 
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+//   @override
+//   Widget build(BuildContext context) {
+//     final theme = Theme.of(context);
 
-    return Card(
+//     return Card(
       
-    );
-  }
-}
+//     );
+//   }
+// }
