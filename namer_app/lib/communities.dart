@@ -42,9 +42,16 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
         child: Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //Title
-              Text('Browse Communities'),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: Text(
+                  'Browse Communities',
+                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                ),
+              ),
               //Search Bar
               Padding(
                 padding: EdgeInsets.only(top: 16, left: 16, right: 16),
