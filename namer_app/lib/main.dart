@@ -2,6 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/messages.dart';
 import 'package:provider/provider.dart';
+import 'package:namer_app/screens/toolCardPage.dart';
 import 'package:namer_app/communities.dart';
 
 void main() {
@@ -77,9 +78,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         page = GeneratorPage();
       case 1:
-        page = FavoritesPage();
+        page = ToolCardPage(toolID: 1,);
         break;
-      case 2:
+      case 2:      
         page = MessagesPage();
         break;
       case 3:
