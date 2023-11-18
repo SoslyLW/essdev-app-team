@@ -59,7 +59,10 @@ class Tool {
   Tool.Default():
     toolID = 0,
     name = "Screwdriver",
-    icon = Icon(Icons.handyman),
+    icon = Icon(
+      Icons.handyman,
+      size: 60,
+      ),
     owner = User.Default(),
     condition = "Good",
     availability = 3,
@@ -150,7 +153,10 @@ class ToolCard extends StatelessWidget {
                         tool.name
                       ),
                       Text(
-                        tool.owner.name
+                        tool.owner.name,
+                        style: TextStyle(
+                          decoration: TextDecoration.underline
+                        ),
                       ),
                       Row(
                         children: [
@@ -163,19 +169,78 @@ class ToolCard extends StatelessWidget {
                   ),
               ],
             ),
+            SizedBox(height: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Condition: " + tool.condition),
-                Text("Availability:" + tool.availability.toString() + " months"),
-                Text("Distance: " + tool.distance.toString() + " km"),
-                Text("Method: " + tool.method),
+                Text.rich(
+                  TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: ("Condition: "),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold
+                        )
+                      ),
+                      TextSpan(
+                        text: tool.condition
+                      ),
+                    ],
+                  ),
+                ),
+                Text.rich(
+                  TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: ("Availability: "),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold
+                        )
+                      ),
+                      TextSpan(
+                        text: (tool.availability.toString() + " months")
+                      ),
+                    ],
+                  ),
+                ),
+                Text.rich(
+                  TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: ("Distance: "),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold
+                        )
+                      ),
+                      TextSpan(
+                        text: (tool.distance.toString() + " km")
+                      ),
+                    ],
+                  ),
+                ),
+                Text.rich(
+                  TextSpan(
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: ("Method: "),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold
+                        )
+                      ),
+                      TextSpan(
+                        text: tool.method
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
+            SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TimeDropdown(),
+                SizedBox(width: 20),
                 Text("Request"),
             ],
             ),
