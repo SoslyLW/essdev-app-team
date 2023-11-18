@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/messages.dart';
 import 'package:provider/provider.dart';
 import 'package:namer_app/communities.dart';
+import 'package:namer_app/loginpage.dart';
 
 void main() {
   runApp(MyApp());
@@ -83,6 +84,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 3:
         page = CommunitiesHomePage();
         break;
+      case 4:
+        page = LoginPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -117,6 +121,11 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.people_alt_outlined),
               label: 'Communities',
             ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.account_circle),
+              icon: Icon(Icons.account_circle),
+              label: 'Login Page',
+            )
           ],
         ),
         body: Row(
