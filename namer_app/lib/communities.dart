@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:namer_app/commmunityDetail.dart';
 import 'package:namer_app/main.dart';
 
+int atomicId = 1;
+
 class Community {
+  int id;
   String name;
   Icon icon = Icon(Icons.person);
 
-  Community(this.name, this.icon);
+  Community(this.name, this.icon) : id = atomicId++;
 
   Community.Default()
       : icon = Icon(Icons.person),
+        id = atomicId++,
         name = "Default Community";
 }
 
@@ -83,11 +87,8 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
                     padding: EdgeInsets.only(bottom: 16),
                     physics: BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
-                      return Card(
-                          color: theme.colorScheme.secondary,
-                          child: ListTile(
-                              leading: communities[index].icon,
-                              title: Text(communities[index].name)));
+                      return CommunityCard(
+                          theme: theme, community: communities[index]);
                     },
                   ),
                 ),
@@ -97,5 +98,34 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
         ),
       ),
     );
+  }
+}
+
+class CommunityCard extends StatelessWidget {
+  const CommunityCard({
+    super.key,
+    required this.theme,
+    required this.community,
+  });
+
+  final ThemeData theme;
+  final Community community;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        color: theme.colorScheme.secondary,
+        child: ListTile(
+          leading: community.icon,
+          title: Text(community.name),
+          trailing: Text(community.id.toString()),
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return CommunitiesDetailPage(community.id);
+              },
+            ));
+          },
+        ));
   }
 }
