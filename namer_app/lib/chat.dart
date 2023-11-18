@@ -68,12 +68,9 @@ class _ChatPageState extends State<ChatPage> {
               padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
               height: 60,
               width: double.infinity,
-              color: theme.colorScheme.surface,
+              color: theme.colorScheme.onSurface,
               child: Row(
                 children: <Widget>[
-                  GestureDetector(
-                    onTap: () {},
-                  ),
                   SizedBox(
                     width: 15,
                   ),
@@ -82,22 +79,22 @@ class _ChatPageState extends State<ChatPage> {
                       decoration: InputDecoration(
                           hintText: "Write message...",
                           hintStyle:
-                              TextStyle(color: theme.colorScheme.onSurface),
+                              TextStyle(color: theme.colorScheme.surface),
                           border: InputBorder.none),
                     ),
                   ),
-                  // SizedBox(
-                  //   width: 15,
-                  // ),
-                  // FloatingActionButton(
-                  //   onPressed: () {},
-                  //   backgroundColor: theme.colorScheme.secondary,
-                  //   elevation: 0,
-                  //   child: Icon(
-                  //     Icons.send,
-                  //     color: theme.colorScheme.onSecondary,
-                  //   ),
-                  // )
+                  SizedBox(
+                    width: 15,
+                  ),
+                  FloatingActionButton(
+                    onPressed: () {},
+                    backgroundColor: theme.colorScheme.secondary,
+                    elevation: 0,
+                    child: Icon(
+                      Icons.send,
+                      color: theme.colorScheme.onSecondary,
+                    ),
+                  )
                 ],
               ),
             ),
