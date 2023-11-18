@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/chat.dart';
 import 'package:namer_app/main.dart';
 
 class MessageUsers {
@@ -33,7 +34,11 @@ class _MessageListState extends State<MessageList> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return ChatPage();
+        }));
+      },
       child: Container(
         color: Color(0xfff5ab00),
         padding: EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
@@ -95,7 +100,7 @@ class MessagesPage extends StatefulWidget {
 class _MessagesPageState extends State<MessagesPage> {
   List<MessageUsers> messageUsers = [
     MessageUsers(
-        name: "Jhon Doe",
+        name: "John Doe",
         messageText: "HEY",
         imageURL: Icon(Icons.person),
         time: "Now"),
@@ -115,7 +120,37 @@ class _MessagesPageState extends State<MessagesPage> {
         imageURL: Icon(Icons.person),
         time: "October 31"),
     MessageUsers(
-        name: "Jhon Doe",
+        name: "John Doe",
+        messageText: "Bye",
+        imageURL: Icon(Icons.person),
+        time: "October 29"),
+    MessageUsers(
+        name: "John Doe",
+        messageText: "Bye",
+        imageURL: Icon(Icons.person),
+        time: "October 29"),
+    MessageUsers(
+        name: "John Doe",
+        messageText: "Bye",
+        imageURL: Icon(Icons.person),
+        time: "October 29"),
+    MessageUsers(
+        name: "John Doe",
+        messageText: "Bye",
+        imageURL: Icon(Icons.person),
+        time: "October 29"),
+    MessageUsers(
+        name: "John Doe",
+        messageText: "Bye",
+        imageURL: Icon(Icons.person),
+        time: "October 29"),
+    MessageUsers(
+        name: "John Doe",
+        messageText: "Bye",
+        imageURL: Icon(Icons.person),
+        time: "October 29"),
+    MessageUsers(
+        name: "John Doe",
         messageText: "Bye",
         imageURL: Icon(Icons.person),
         time: "October 29"),
