@@ -16,10 +16,13 @@ class ToolCardPage extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: ListView(
+        padding: const EdgeInsets.all(8),
         children: [
+          SizedBox(height: 20),
           ToolCard(toolID: 1,),
+          ToolCard(toolID: 1,),
+          ToolCard(toolID: 1),
         ],
       ),
     );

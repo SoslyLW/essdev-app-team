@@ -90,8 +90,15 @@ class _TimeDropdownState extends State<TimeDropdown> {
   Widget build(BuildContext context) {
     return DropdownButton<String>(
       value: dropdownValue,
-      icon: const Icon(Icons.arrow_downward),
+      icon: Icon(
+        Icons.arrow_downward,
+        color: Theme.of(context).colorScheme.onPrimary,
+        ),
       elevation: 16,
+      underline: Container(
+        height: 2,
+        color: Theme.of(context).colorScheme.onPrimary,
+      ),
       onChanged: (String? value) {
         setState(() {
           dropdownValue = value!;
@@ -150,7 +157,10 @@ class ToolCard extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        tool.name
+                        tool.name,
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
                       ),
                       Text(
                         tool.owner.name,
@@ -241,7 +251,13 @@ class ToolCard extends StatelessWidget {
               children: [
                 TimeDropdown(),
                 SizedBox(width: 20),
-                Text("Request"),
+                TextButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(theme.colorScheme.onPrimary),
+                  ),
+                  onPressed: () => {},
+                  child: Text("REQUEST"),
+                  ),
             ],
             ),
           ],
