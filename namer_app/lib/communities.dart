@@ -40,7 +40,7 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
     return Container(
       child: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.only(top: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -75,12 +75,13 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
               //Items (Scrollable)
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.only(
+                      top: 16, left: 16, right: 16, bottom: 4),
                   child: ListView.builder(
                     itemCount: communities.length,
                     shrinkWrap: true,
-                    padding: EdgeInsets.only(top: 16),
-                    physics: NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: 16),
+                    physics: BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
                       return Card(
                           color: theme.colorScheme.secondary,
