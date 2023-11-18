@@ -100,7 +100,7 @@ class MessagesPage extends StatefulWidget {
 class _MessagesPageState extends State<MessagesPage> {
   List<MessageUsers> messageUsers = [
     MessageUsers(
-        name: "Jhon Doe",
+        name: "John Doe",
         messageText: "HEY",
         imageURL: Icon(Icons.person),
         time: "Now"),
@@ -120,7 +120,37 @@ class _MessagesPageState extends State<MessagesPage> {
         imageURL: Icon(Icons.person),
         time: "October 31"),
     MessageUsers(
-        name: "Jhon Doe",
+        name: "John Doe",
+        messageText: "Bye",
+        imageURL: Icon(Icons.person),
+        time: "October 29"),
+    MessageUsers(
+        name: "John Doe",
+        messageText: "Bye",
+        imageURL: Icon(Icons.person),
+        time: "October 29"),
+    MessageUsers(
+        name: "John Doe",
+        messageText: "Bye",
+        imageURL: Icon(Icons.person),
+        time: "October 29"),
+    MessageUsers(
+        name: "John Doe",
+        messageText: "Bye",
+        imageURL: Icon(Icons.person),
+        time: "October 29"),
+    MessageUsers(
+        name: "John Doe",
+        messageText: "Bye",
+        imageURL: Icon(Icons.person),
+        time: "October 29"),
+    MessageUsers(
+        name: "John Doe",
+        messageText: "Bye",
+        imageURL: Icon(Icons.person),
+        time: "October 29"),
+    MessageUsers(
+        name: "John Doe",
         messageText: "Bye",
         imageURL: Icon(Icons.person),
         time: "October 29"),

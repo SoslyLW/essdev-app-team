@@ -5,6 +5,20 @@ class ChatPage extends StatefulWidget {
   _ChatPageState createState() => _ChatPageState();
 }
 
+class ChatMessage {
+  String messageContent;
+  String messageType;
+  ChatMessage({required this.messageContent, required this.messageType});
+}
+
+List<ChatMessage> messages = [
+  ChatMessage(messageContent: "Hello John", messageType: "receiver"),
+  ChatMessage(messageContent: "How have you been?", messageType: "sender"),
+  ChatMessage(messageContent: "Very good thanks.", messageType: "receiver"),
+  ChatMessage(messageContent: "cool...", messageType: "sender"),
+  ChatMessage(messageContent: "HEY", messageType: "receiver")
+];
+
 class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
@@ -42,7 +56,7 @@ class _ChatPageState extends State<ChatPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "Jhon Doe",
+                    "John Doe",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(
@@ -62,13 +76,39 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Stack(
         children: <Widget>[
+          ListView.builder(
+              itemCount: messages.length,
+              shrinkWrap: true,
+              padding: EdgeInsets.only(top: 10, bottom: 10),
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                return Container(
+                    padding: EdgeInsets.only(
+                        left: 16, right: 16, top: 10, bottom: 10),
+                    child: Align(
+                        alignment: (messages[index].messageType == "receiver"
+                            ? Alignment.topLeft
+                            : Alignment.topRight),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: (messages[index].messageType == "receiver"
+                                  ? theme.colorScheme.onError
+                                  : theme.colorScheme.secondary)),
+                          padding: EdgeInsets.all(15),
+                          child: Text(
+                            messages[index].messageContent,
+                            style: TextStyle(fontSize: 15),
+                          ),
+                        )));
+              }),
           Align(
             alignment: Alignment.bottomLeft,
             child: Container(
               padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
               height: 60,
               width: double.infinity,
-              color: theme.colorScheme.onSurface,
+              color: theme.colorScheme.onError,
               child: Row(
                 children: <Widget>[
                   SizedBox(
@@ -79,7 +119,7 @@ class _ChatPageState extends State<ChatPage> {
                       decoration: InputDecoration(
                           hintText: "Write message...",
                           hintStyle:
-                              TextStyle(color: theme.colorScheme.surface),
+                              TextStyle(color: theme.colorScheme.onBackground),
                           border: InputBorder.none),
                     ),
                   ),
