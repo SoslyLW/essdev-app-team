@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/messages.dart';
 import 'package:provider/provider.dart';
 import 'package:namer_app/communitiesHomePage.dart';
+import 'package:namer_app/screens/toolCardPage.dart';
+import 'package:namer_app/profile.dart';
+import 'package:namer_app/settings.dart';
 
 void main() {
   runApp(MyApp());
@@ -77,8 +80,8 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         page = GeneratorPage();
       case 1:
-        page = FavoritesPage();
-      case 2:
+        page = ToolCardPage(toolID: 1,);
+      case 2:      
         page = MessagesPage();
       case 3:
         page = CommunitiesHomePage();
@@ -88,6 +91,30 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return LayoutBuilder(builder: (context, constraints) {
       return Scaffold(
+        appBar: AppBar(
+          title: Text('ToolPool'),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsPage()),
+              );
+            },
+          ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.man_3_rounded),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                );
+              },
+            ),
+          ],
+        ),
         bottomNavigationBar: NavigationBar(
           onDestinationSelected: (int index) {
             setState(() {
