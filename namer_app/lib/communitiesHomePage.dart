@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/commmunityDetail.dart';
 import 'package:namer_app/main.dart';
+import 'package:namer_app/community.dart';
 
-int atomicId = 1;
-
-class Community {
-  int id;
-  String name;
-  Icon icon = Icon(Icons.person);
-
-  Community(this.name, this.icon) : id = atomicId++;
-
-  Community.Default()
-      : icon = Icon(Icons.person),
-        id = atomicId++,
-        name = "Default Community";
-}
+List<Community> communities = [
+  Community.Default(),
+  Community("Smith Engineering", Icon(Icons.handyman)),
+  Community("Smith Engineering", Icon(Icons.engineering)),
+  Community("Smith Engineering", Icon(Icons.currency_exchange_outlined)),
+  Community("Smith Engineering", Icon(Icons.handyman)),
+  Community("Smith Engineering", Icon(Icons.handyman)),
+  Community("Smith Engineering", Icon(Icons.handyman)),
+  Community("Smith Engineering", Icon(Icons.handyman)),
+  Community("Smith Engineering", Icon(Icons.handyman)),
+  Community("Smith Engineering", Icon(Icons.handyman)),
+];
 
 class CommunitiesHomePage extends StatefulWidget {
   @override
@@ -24,18 +23,6 @@ class CommunitiesHomePage extends StatefulWidget {
 
 class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
   bool isDark = false;
-  List<Community> communities = [
-    Community.Default(),
-    Community("Smith Engineering", Icon(Icons.handyman)),
-    Community("Smith Engineering", Icon(Icons.handyman)),
-    Community("Smith Engineering", Icon(Icons.handyman)),
-    Community("Smith Engineering", Icon(Icons.handyman)),
-    Community("Smith Engineering", Icon(Icons.handyman)),
-    Community("Smith Engineering", Icon(Icons.handyman)),
-    Community("Smith Engineering", Icon(Icons.handyman)),
-    Community("Smith Engineering", Icon(Icons.handyman)),
-    Community("Smith Engineering", Icon(Icons.handyman)),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +109,7 @@ class CommunityCard extends StatelessWidget {
           onTap: () {
             Navigator.push(context, MaterialPageRoute(
               builder: (context) {
-                return CommunitiesDetailPage(community.id);
+                return CommunitiesDetailPage(community);
               },
             ));
           },
