@@ -57,7 +57,7 @@ class LoginPage extends StatefulWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text('Forget Password or Username',
+                    Text('Forgt Password or Username',
                     style: TextStyle(
                       color: Colors.red
                     )

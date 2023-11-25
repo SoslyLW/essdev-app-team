@@ -9,7 +9,7 @@ import 'package:namer_app/settings.dart';
 import 'package:namer_app/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-
+import 'package:namer_app/registerpage.dart';
 void main() async {
   runApp(MyApp());
   await Firebase.initializeApp(
@@ -78,6 +78,10 @@ class _MyHomePageState extends State<MyHomePage> {
         page = CommunitiesHomePage();
         case 4:
         page = LoginPage();
+        break;
+        case 5:
+        page = RegisterPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -141,6 +145,11 @@ class _MyHomePageState extends State<MyHomePage> {
               selectedIcon: Icon(Icons.account_circle),
               icon: Icon(Icons.account_circle),
               label: 'Login Page',
+            ),
+             NavigationDestination(
+              selectedIcon: Icon(Icons.remember_me),
+              icon: Icon(Icons.remember_me),
+              label: 'Registration Page',
             )
           ],
         ),
