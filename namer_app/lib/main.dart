@@ -64,22 +64,12 @@ class _MyHomePageState extends State<MyHomePage> {
     switch (selectedIndex) {
       case 0:
         page = GeneratorPage();
-        break;
       case 1:
         page = FavoritesPage();
-        break;
       case 2:
         page = MessagesPage();
-        break;
       case 3:
         page = CommunitiesHomePage();
-        break;
-      /*case 4:
-        page = ProfilePage();
-        break;
-      case 5:
-        page = SettingsPage();
-        break;*/
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
