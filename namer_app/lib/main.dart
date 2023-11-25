@@ -62,10 +62,12 @@ class _MyHomePageState extends State<MyHomePage> {
     switch (selectedIndex) {
       case 0:
         page = NotificationsPage();
+        page = NotificationsPage();
       case 1:
         page = ToolCardPage(
           toolID: 1,
         );
+        break;
       case 2:
         page = MessagesPage();
       case 3:
