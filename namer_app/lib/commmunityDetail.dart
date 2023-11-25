@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/communities.dart';
+import 'package:namer_app/communitiesHomePage.dart';
 import 'package:namer_app/community.dart';
 
 class CommunitiesDetailPage extends StatelessWidget {
