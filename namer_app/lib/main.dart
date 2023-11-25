@@ -4,7 +4,7 @@ import 'package:namer_app/messages.dart';
 import 'package:provider/provider.dart';
 import 'package:namer_app/communities.dart';
 import 'package:namer_app/loginpage.dart';
-
+import 'package:namer_app/registerpage.dart';
 void main() {
   runApp(MyApp());
 }
@@ -87,6 +87,9 @@ class _MyHomePageState extends State<MyHomePage> {
       case 4:
         page = LoginPage();
         break;
+        case 5:
+        page = RegisterPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -125,6 +128,11 @@ class _MyHomePageState extends State<MyHomePage> {
               selectedIcon: Icon(Icons.account_circle),
               icon: Icon(Icons.account_circle),
               label: 'Login Page',
+            ),
+             NavigationDestination(
+              selectedIcon: Icon(Icons.remember_me),
+              icon: Icon(Icons.remember_me),
+              label: 'Registration Page',
             )
           ],
         ),
