@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/community.dart';
 
 /// TODO
-/// - Add "New Community Button"
+/// - Add "New Community Button" functionality
 
 List<Community> allCommunities = [
   Community.Default(),
@@ -40,8 +40,8 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Container(
-      child: SafeArea(
+    return Scaffold(
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 16),
           child: Column(
@@ -94,9 +94,18 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
                     },
                   ),
                 ),
-              )
+              ),
             ],
           ),
+        ),
+      ),
+      floatingActionButton: //Add button
+          FloatingActionButton.extended(
+        onPressed: () {},
+        label: Text("Add"),
+        icon: Icon(
+          Icons.add,
+          color: theme.colorScheme.secondary,
         ),
       ),
     );
