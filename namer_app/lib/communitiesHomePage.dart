@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/community.dart';
 
-List<Community> communities = [
+/// TODO
+/// - Add "New Community Button"
+
+List<Community> allCommunities = [
   Community.Default(),
   Community("Smith Engineering", Icon(Icons.handyman)),
   Community("Queen's Engineering", Icon(Icons.engineering)),
@@ -22,6 +25,16 @@ class CommunitiesHomePage extends StatefulWidget {
 
 class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
   bool isDark = false;
+  List<Community> communities = allCommunities;
+
+  void filterCommunities(String query) {
+    setState(() {
+      communities = allCommunities
+          .where(
+              (item) => item.name.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +59,9 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
               Padding(
                 padding: EdgeInsets.only(top: 16, left: 16, right: 16),
                 child: TextField(
+                  onChanged: (value) {
+                    filterCommunities(value);
+                  },
                   decoration: InputDecoration(
                       hintText: "Search...",
                       hintStyle: TextStyle(color: Colors.grey.shade600),
