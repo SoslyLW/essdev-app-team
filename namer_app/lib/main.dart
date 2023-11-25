@@ -89,16 +89,16 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text('ToolPool'),
           centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsPage()),
+              );
+            },
+          ),
           actions: [
-            IconButton(
-              icon: Icon(Icons.settings),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => SettingsPage()),
-                );
-              },
-            ),
             IconButton(
               icon: Icon(Icons.man_3_rounded),
               onPressed: () {
