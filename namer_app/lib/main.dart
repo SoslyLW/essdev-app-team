@@ -2,6 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/messages.dart';
 import 'package:provider/provider.dart';
+import 'package:namer_app/screens/toolCardPage.dart';
 import 'package:namer_app/communities.dart';
 import 'package:namer_app/profile.dart';
 import 'package:namer_app/settings.dart';
@@ -21,7 +22,21 @@ class MyApp extends StatelessWidget {
         title: 'Namer App',
         theme: ThemeData(
           useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+          colorScheme: ColorScheme(
+              background: Color(0xFFFFEBBA), //Used for bottom naviagation bar
+              primary: Color(0xffFFF6D9), //Backkground/main colour of screens
+              onPrimary: Color(0xff241d0f),
+              secondary: Color(0xFFf5ab00), //Main orange colour
+              onSecondary: Color(0xff241d0f),
+              tertiary: Color(0xffd5dad2), //Secondary colour
+              onTertiary: Color(0xff241d0f),
+              onBackground: Color(0xff241d0f),
+              brightness: Brightness.light,
+              error: Colors.red,
+              onError: Colors.white,
+              surface:
+                  Color(0xFFf5ab00), //Default background for card-like widgets
+              onSurface: Color(0xff241d0f)),
         ),
         home: MyHomePage(),
       ),
@@ -65,8 +80,8 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         page = GeneratorPage();
       case 1:
-        page = FavoritesPage();
-      case 2:
+        page = ToolCardPage(toolID: 1,);
+      case 2:      
         page = MessagesPage();
       case 3:
         page = CommunitiesHomePage();
@@ -106,7 +121,8 @@ class _MyHomePageState extends State<MyHomePage> {
               selectedIndex = index;
             });
           },
-          indicatorColor: Colors.amber[800],
+          indicatorColor: Theme.of(context).colorScheme.secondary,
+          backgroundColor: Theme.of(context).colorScheme.background,
           selectedIndex: selectedIndex,
           destinations: const <Widget>[
             NavigationDestination(
