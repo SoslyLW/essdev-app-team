@@ -2,6 +2,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:namer_app/widgets/toolCard.dart';
+import 'package:namer_app/widgets/requestedToolCard.dart';
 
 class ToolCardPage extends StatelessWidget {
   const ToolCardPage({
@@ -21,7 +22,7 @@ class ToolCardPage extends StatelessWidget {
         children: [
           SizedBox(height: 20),
           ToolCard(toolID: 1,),
-          ToolCard(toolID: 1,),
+          RequestedToolCard(toolID: 1,),
           ToolCard(toolID: 1),
         ],
       ),
