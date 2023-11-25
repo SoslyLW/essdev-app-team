@@ -1,22 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/communities.dart';
+import 'package:namer_app/community.dart';
 
-class CommunitiesDetailPage extends StatefulWidget {
-  final int pageId;
-
-  const CommunitiesDetailPage(this.pageId) : super();
-  @override
-  State<CommunitiesDetailPage> createState() =>
-      _CommunitiesDetailPageState(this.pageId);
-}
-
-class _CommunitiesDetailPageState extends State<CommunitiesDetailPage> {
-  bool isDark = false;
-  int pageId = -1;
-
-  _CommunitiesDetailPageState(int pageId_) {
-    pageId = pageId_;
-  }
+class CommunitiesDetailPage extends StatelessWidget {
+  final Community community;
+  CommunitiesDetailPage(this.community) : super();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +21,7 @@ class _CommunitiesDetailPageState extends State<CommunitiesDetailPage> {
               Padding(
                 padding: const EdgeInsets.only(left: 16.0),
                 child: Text(
-                  'COMMUNITY NAME HERE',
+                  community.name,
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
               ),
