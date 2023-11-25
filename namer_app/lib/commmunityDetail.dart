@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/communitiesHomePage.dart';
 import 'package:namer_app/community.dart';
+
+/// TODO
+/// - Figure out how to keep bootom and top bars when going from community home
+/// page to community detail page
 
 class CommunitiesDetailPage extends StatelessWidget {
   final Community community;
@@ -8,8 +11,6 @@ class CommunitiesDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Scaffold(
       body: SafeArea(
         child: Padding(

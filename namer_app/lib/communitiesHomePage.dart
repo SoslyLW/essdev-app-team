@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/commmunityDetail.dart';
-import 'package:namer_app/main.dart';
 import 'package:namer_app/community.dart';
 
 List<Community> communities = [
   Community.Default(),
   Community("Smith Engineering", Icon(Icons.handyman)),
-  Community("Smith Engineering", Icon(Icons.engineering)),
-  Community("Smith Engineering", Icon(Icons.currency_exchange_outlined)),
-  Community("Smith Engineering", Icon(Icons.handyman)),
-  Community("Smith Engineering", Icon(Icons.handyman)),
-  Community("Smith Engineering", Icon(Icons.handyman)),
+  Community("Queen's Engineering", Icon(Icons.engineering)),
+  Community("Rich People District", Icon(Icons.currency_exchange_outlined)),
+  Community("Bus People", Icon(Icons.bus_alert)),
+  Community("Shipping Company", Icon(Icons.local_shipping)),
+  Community("Really Super Duper Long Name For Testing Ridiculous",
+      Icon(Icons.horizontal_rule)),
   Community("Smith Engineering", Icon(Icons.handyman)),
   Community("Smith Engineering", Icon(Icons.handyman)),
   Community("Smith Engineering", Icon(Icons.handyman)),
@@ -85,34 +84,5 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
         ),
       ),
     );
-  }
-}
-
-class CommunityCard extends StatelessWidget {
-  const CommunityCard({
-    super.key,
-    required this.theme,
-    required this.community,
-  });
-
-  final ThemeData theme;
-  final Community community;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-        color: theme.colorScheme.secondary,
-        child: ListTile(
-          leading: community.icon,
-          title: Text(community.name),
-          trailing: Text(community.id.toString()),
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) {
-                return CommunitiesDetailPage(community);
-              },
-            ));
-          },
-        ));
   }
 }
