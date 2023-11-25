@@ -2,8 +2,8 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/messages.dart';
 import 'package:provider/provider.dart';
+import 'package:namer_app/communitiesHomePage.dart';
 import 'package:namer_app/screens/toolCardPage.dart';
-import 'package:namer_app/communities.dart';
 import 'package:namer_app/profile.dart';
 import 'package:namer_app/settings.dart';
 
