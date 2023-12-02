@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/main.dart';
 
-class Notifications {
+class Notification {
   String community;
   String message;
   Icon communityIcon;
-  Notifications(
-      {required this.community,
-      required this.message,
-      required this.communityIcon});
+  Notification(this.community, this.message, this.communityIcon);
 
-  Notifications.deafault()
+  Notification.Default()
       : community = "Kingston",
         message = "Hello I am looking to buy your screwdriver.",
         communityIcon = Icon(
@@ -20,22 +17,58 @@ class Notifications {
 }
 
 class NotificationsList extends StatefulWidget {
-  String community;
-  String message;
-  Icon communityIcon;
-  NotificationsList(
-      {required this.community,
-      required this.message,
-      required this.communityIcon});
+  List<Notification> notifications;
+  NotificationsList(this.notifications);
+
   @override
   _NotificationsListState createState() => _NotificationsListState();
 }
 
+List<Notification> testNotifications = [
+  Notification.Default(),
+  Notification.Default(),
+  Notification.Default(),
+  Notification.Default(),
+  Notification.Default(),
+  Notification.Default(),
+  Notification(
+      "Test 2",
+      "Give me money please",
+      Icon(
+        Icons.handshake,
+        size: 50,
+      ))
+];
+
 class _NotificationsListState extends State<NotificationsList> {
-  final notification = Notifications.deafault();
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    return ListView.builder(
+        itemCount: testNotifications.length,
+        shrinkWrap: true,
+        padding: EdgeInsets.only(top: 16),
+        physics: BouncingScrollPhysics(),
+        itemBuilder: (context, index) {
+          return NotificationCard(
+              theme: theme, notification: testNotifications[index]);
+        });
+  }
+}
+
+class NotificationCard extends StatelessWidget {
+  const NotificationCard({
+    super.key,
+    required this.theme,
+    required this.notification,
+  });
+
+  final ThemeData theme;
+  final Notification notification;
+
+  @override
+  Widget build(BuildContext context) {
     return Card(
         color: theme.colorScheme.secondary,
         child: Padding(
@@ -112,9 +145,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                   child: Padding(
                       padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
                       child: NotificationsList(
-                        community: "Kingston",
-                        communityIcon: Icon(Icons.map),
-                        message: "Hello I am looking to buy your screwdriver.",
+                        testNotifications,
                       )))
             ],
           ),
