@@ -5,11 +5,14 @@ class Notification {
   String community;
   String message;
   Icon communityIcon;
-  Notification(this.community, this.message, this.communityIcon);
+  String timeString;
+  Notification(
+      this.community, this.message, this.timeString, this.communityIcon);
 
   Notification.Default()
       : community = "Kingston",
         message = "Hello I am looking to buy your screwdriver.",
+        timeString = "Now",
         communityIcon = Icon(
           Icons.map,
           size: 50,
@@ -34,6 +37,7 @@ List<Notification> testNotifications = [
   Notification(
       "Test 2",
       "Give me money please",
+      "1 min",
       Icon(
         Icons.handshake,
         size: 50,
@@ -105,7 +109,7 @@ class NotificationCard extends StatelessWidget {
                     )
                   ],
                 )),
-                Text("Now"),
+                Text(notification.timeString),
               ]),
             ])));
   }
