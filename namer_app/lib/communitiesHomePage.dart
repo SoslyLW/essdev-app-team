@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/AddCommunityForm.dart';
+import 'package:namer_app/addCommunitiyPage.dart';
 import 'package:namer_app/community.dart';
 
 /// TODO
@@ -101,7 +103,13 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
       ),
       floatingActionButton: //Add button
           FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) {
+              return AddCommunityPage();
+            },
+          ));
+        },
         label: Text("Add"),
         icon: Icon(
           Icons.add,

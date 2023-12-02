@@ -7,6 +7,7 @@ class Community {
   int id;
   String name;
   Icon icon = Icon(Icons.person);
+  bool private = false;
 
   Community(this.name, this.icon) : id = atomicId++;
 
