@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/addCommunityPage.dart';
 import 'package:namer_app/community.dart';
 
+/// TODO
+/// - Remove index number from Browse Communities list
+
 List<Community> allCommunities = [
   Community.Default(),
   Community("Smith Engineering", Icon(Icons.handyman)),
