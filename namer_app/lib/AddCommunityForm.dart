@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 
 /// TODO
 /// - Add community icon selector
-/// - Maybe add ability to invite users from the main screen
+/// - Add ability to invite users from the main screen
 
 enum PublicPrivate { public, private }
 
-// Define a custom Form widget.
 class AddCommunityForm extends StatefulWidget {
   const AddCommunityForm({super.key});
 
@@ -16,8 +15,6 @@ class AddCommunityForm extends StatefulWidget {
   }
 }
 
-// Define a corresponding State class.
-// This class holds data related to the form.
 class AddCommunityFormState extends State<AddCommunityForm> {
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
@@ -39,7 +36,6 @@ class AddCommunityFormState extends State<AddCommunityForm> {
         child: Column(
           children: <Widget>[
             // Probably want to add a list view and padding here
-            // Add TextFormFields and ElevatedButton here.
             TextFormField(
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -107,8 +103,7 @@ class AddCommunityFormState extends State<AddCommunityForm> {
                 onPressed: () {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (_formKey.currentState!.validate()) {
-                    // If the form is valid, display a snackbar. In the real world,
-                    // you'd often call a server or save the information in a database.
+                    // Success form submit code to go here
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing Data')),
                     );

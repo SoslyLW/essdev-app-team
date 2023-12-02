@@ -80,8 +80,10 @@ class _MyHomePageState extends State<MyHomePage> {
       case 0:
         page = GeneratorPage();
       case 1:
-        page = ToolCardPage(toolID: 1,);
-      case 2:      
+        page = ToolCardPage(
+          toolID: 1,
+        );
+      case 2:
         page = MessagesPage();
       case 3:
         page = CommunitiesHomePage();
