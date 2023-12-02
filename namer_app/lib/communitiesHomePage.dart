@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/AddCommunityForm.dart';
 import 'package:namer_app/addCommunityPage.dart';
 import 'package:namer_app/community.dart';
 
