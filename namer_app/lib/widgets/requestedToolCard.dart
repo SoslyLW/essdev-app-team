@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:namer_app/widgets/toolCard.dart';
 
 // This file exclusively defines the card that
@@ -40,16 +38,19 @@ class RequestedToolCard extends StatelessWidget {
                 Icon(
                   Icons.cancel,
                   color: Colors.red,
+                  size: 30,
                   ),
                 SizedBox(width: 10),
                 Icon(
                   Icons.message,
                   color: Colors.grey.shade800,
+                  size: 30,
                   ),
                 SizedBox(width: 10),
                 Icon(
                   Icons.check_box,
                   color: Colors.green.shade800,
+                  size: 30,
                   )
               ],
             )

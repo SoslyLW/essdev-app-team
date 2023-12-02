@@ -1,6 +1,7 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/messages.dart';
+import 'package:namer_app/widgets/toolCard.dart';
 import 'package:provider/provider.dart';
 import 'package:namer_app/screens/toolCardPage.dart';
 import 'package:namer_app/communities.dart';
@@ -59,6 +60,16 @@ class MyAppState extends ChangeNotifier {
     } else {
       favorites.add(current);
     }
+    notifyListeners();
+  }
+
+  var cardsList = <Widget>[
+    SizedBox(height: 20,),
+    ToolCard(toolID: 1),
+  ];
+
+  void addCard(Widget card) {
+    cardsList.add(card);
     notifyListeners();
   }
 }

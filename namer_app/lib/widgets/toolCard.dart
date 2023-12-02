@@ -1,8 +1,9 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:namer_app/main.dart';
+import 'package:namer_app/widgets/requestedToolCard.dart';
 
 // This file exclusively defines the card to request
 // a tool as a stateless widget. This card can then
@@ -141,6 +142,10 @@ class ToolCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    // watch the state of the app for changes
+    // to the list of cards to be displayed
+    var appState = context.watch<MyAppState>();
+
     return Card(
       color: theme.colorScheme.secondary,
       child: Padding(
@@ -255,7 +260,11 @@ class ToolCard extends StatelessWidget {
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(theme.colorScheme.onPrimary),
                   ),
-                  onPressed: () => {},
+                  onPressed: () => {
+                    // add a requested toolCard to the list of cards
+                    // to be displayed on the page
+                    appState.addCard(RequestedToolCard(toolID: toolID))
+                  },
                   child: Text("REQUEST"),
                   ),
             ],
