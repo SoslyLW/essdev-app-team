@@ -66,7 +66,6 @@ class _MyHomePageState extends State<MyHomePage> {
         page = ToolCardPage(
           toolID: 1,
         );
-        break;
       case 2:
         page = MessagesPage();
       case 3:

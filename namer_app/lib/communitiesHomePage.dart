@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/commmunityDetail.dart';
-import 'package:namer_app/main.dart';
+import 'package:namer_app/addCommunityPage.dart';
 import 'package:namer_app/community.dart';
 
-List<Community> communities = [
+List<Community> allCommunities = [
   Community.Default(),
   Community("Smith Engineering", Icon(Icons.handyman)),
-  Community("Smith Engineering", Icon(Icons.engineering)),
-  Community("Smith Engineering", Icon(Icons.currency_exchange_outlined)),
-  Community("Smith Engineering", Icon(Icons.handyman)),
-  Community("Smith Engineering", Icon(Icons.handyman)),
-  Community("Smith Engineering", Icon(Icons.handyman)),
+  Community("Queen's Engineering", Icon(Icons.engineering)),
+  Community("Rich People District", Icon(Icons.currency_exchange_outlined)),
+  Community("Bus People", Icon(Icons.bus_alert)),
+  Community("Shipping Company", Icon(Icons.local_shipping)),
+  Community("Really Super Duper Long Name For Testing Ridiculous",
+      Icon(Icons.horizontal_rule)),
   Community("Smith Engineering", Icon(Icons.handyman)),
   Community("Smith Engineering", Icon(Icons.handyman)),
   Community("Smith Engineering", Icon(Icons.handyman)),
@@ -23,13 +23,23 @@ class CommunitiesHomePage extends StatefulWidget {
 
 class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
   bool isDark = false;
+  List<Community> communities = allCommunities;
+
+  void filterCommunities(String query) {
+    setState(() {
+      communities = allCommunities
+          .where(
+              (item) => item.name.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Container(
-      child: SafeArea(
+    return Scaffold(
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 16),
           child: Column(
@@ -47,6 +57,9 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
               Padding(
                 padding: EdgeInsets.only(top: 16, left: 16, right: 16),
                 child: TextField(
+                  onChanged: (value) {
+                    filterCommunities(value);
+                  },
                   decoration: InputDecoration(
                       hintText: "Search...",
                       hintStyle: TextStyle(color: Colors.grey.shade600),
@@ -79,40 +92,26 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
                     },
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
       ),
+      floatingActionButton: //Add button
+          FloatingActionButton.extended(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) {
+              return AddCommunityPage();
+            },
+          ));
+        },
+        label: Text("Add"),
+        icon: Icon(
+          Icons.add,
+          color: theme.colorScheme.secondary,
+        ),
+      ),
     );
-  }
-}
-
-class CommunityCard extends StatelessWidget {
-  const CommunityCard({
-    super.key,
-    required this.theme,
-    required this.community,
-  });
-
-  final ThemeData theme;
-  final Community community;
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-        color: theme.colorScheme.secondary,
-        child: ListTile(
-          leading: community.icon,
-          title: Text(community.name),
-          trailing: Text(community.id.toString()),
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) {
-                return CommunitiesDetailPage(community);
-              },
-            ));
-          },
-        ));
   }
 }
