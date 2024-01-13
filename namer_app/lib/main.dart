@@ -7,18 +7,28 @@ import 'package:namer_app/screens/toolCardPage.dart';
 import 'package:namer_app/communities.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:namer_app/AddUser.dart';
+import 'package:namer_app/GetUser.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // db = FirebaseFirestore.instance;
-  runApp(MyApp());
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
+  runApp(MyApp(firestore: db,));
 }
 
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({
+    super.key,
+    required this.firestore,
+    });
+
+  final FirebaseFirestore firestore;
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +83,8 @@ class MyAppState extends ChangeNotifier {
   var cardsList = <Widget>[
     SizedBox(height: 20,),
     ToolCard(toolID: 1),
+    // AddUser('jack fergusson', 'queens chess club', 20),
+    // GetUserName('1'),
   ];
 
   void addCard(Widget card) {
