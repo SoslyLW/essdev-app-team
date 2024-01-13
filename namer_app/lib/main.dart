@@ -9,11 +9,11 @@ import 'package:namer_app/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-Future<void> main() async {
+void main() async {
+  runApp(MyApp());
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
