@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "560648403823",
+    "project_id": "tool-pool",
+    "storage_bucket": "tool-pool.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:560648403823:android:92759f424835a49e85869a",
+        "android_client_info": {
+          "package_name": "com.example.namer_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqIHGvkoCuDRfkvj62ygVIkWRosJfzr5w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

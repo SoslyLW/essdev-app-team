@@ -5,10 +5,17 @@ import 'package:namer_app/widgets/toolCard.dart';
 import 'package:provider/provider.dart';
 import 'package:namer_app/screens/toolCardPage.dart';
 import 'package:namer_app/communities.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  // db = FirebaseFirestore.instance;
   runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -90,13 +97,10 @@ class _MyHomePageState extends State<MyHomePage> {
         page = GeneratorPage();
       case 1:
         page = ToolCardPage(toolID: 1,);
-        break;
       case 2:      
         page = MessagesPage();
-        break;
       case 3:
         page = CommunitiesHomePage();
-        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
