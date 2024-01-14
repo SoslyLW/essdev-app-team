@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/addCommunityPage.dart';
 import 'package:namer_app/community.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 List<Community> allCommunities = [
   Community.Default(),
@@ -23,7 +25,11 @@ class CommunitiesHomePage extends StatefulWidget {
 
 class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
   bool isDark = false;
-  List<Community> communities = allCommunities;
+  // List<Community> communities = allCommunities;
+  List<Community> communities = [];
+
+  // FirebaseFirestore firestore = FirebaseFirestore.instance;
+  // CollectionReference users = FirebaseFirestore.instance.collection('communities');
 
   void filterCommunities(String query) {
     setState(() {
@@ -37,6 +43,22 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    // communities = [];
+
+    FirebaseFirestore.instance
+      .collection('communities')
+      .get()
+      .then((QuerySnapshot querySnapshot) {
+          communities = [];
+          querySnapshot.docs.forEach((doc) {
+              // print(doc["name"]);
+              // print(doc);
+              // print("Hello");
+              communities.add(Community(doc["name"], Icon(Icons.handyman)));
+          });
+      });
+
+    // print(communities);
 
     return Scaffold(
       body: SafeArea(

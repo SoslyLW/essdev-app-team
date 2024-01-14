@@ -5,6 +5,7 @@ import 'package:namer_app/community.dart';
 /// - Figure out how to keep bottom and top bars when going from community home
 /// page to community detail page
 /// - Add Restriction on Community name overflow
+/// - Add back button
 
 class CommunitiesDetailPage extends StatelessWidget {
   final Community community;
