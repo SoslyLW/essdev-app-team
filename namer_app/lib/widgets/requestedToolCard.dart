@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:namer_app/widgets/toolCard.dart';
+import 'package:namer_app/GetUser.dart';
 
 // This file exclusively defines the card that
 // shows when one of your tools have been requested.
@@ -11,17 +12,21 @@ import 'package:namer_app/widgets/toolCard.dart';
 class RequestedToolCard extends StatelessWidget {
   RequestedToolCard({
     super.key,
-    required this.toolID
+    required this.toolID,
+    required this.userID
   });
 
   final int toolID;
+  final int userID;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     final tool = Tool.Default();
-    final user = User.Default();
+    final user = User(userID, "John", Icon(Icons.person), 5);
+
+    print("!!!!!!!!!" + user.userID.toString());
 
     return Card(
       color: theme.colorScheme.secondary,
@@ -29,7 +34,22 @@ class RequestedToolCard extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            Text(user.name + " has requested your " + tool.name + "."),
+            // This card now makes a query for the name of the user
+            // using userID. This name is shown on the card.
+            FutureBuilder<String>(
+              future: getUserName(user.userID.toString()), 
+              
+              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                if (snapshot.hasData) { 
+                  return Text(
+                    (snapshot.data! + " has requested your " + tool.name + "."),
+                  );
+                }
+                else {
+                  return Text("loading...");
+                }
+              }),
+
             Text("Duration: " + tool.availability.toString() + " months"),
             SizedBox(height: 10),
             Row(

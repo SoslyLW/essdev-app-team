@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:namer_app/main.dart';
 import 'package:namer_app/widgets/requestedToolCard.dart';
 
+import 'package:namer_app/GetUser.dart';
+
 // This file exclusively defines the card to request
 // a tool as a stateless widget. This card can then
 // be used in a number of contexts, shown in the
@@ -27,8 +29,8 @@ class User {
 
   // default user for prototyping
   User.Default():
-    userID = 0,
-    name = "John Doe",
+    userID = 1,
+    name = "AHHHHHHH",
     icon = Icon(Icons.person),
     rating = 4;
 }
@@ -146,6 +148,12 @@ class ToolCard extends StatelessWidget {
     // to the list of cards to be displayed
     var appState = context.watch<MyAppState>();
 
+    if (toolID == 2) {
+      var newUser = User(2, "John", Icon(Icons.person), 5);
+      print("It happened!");
+      tool.owner = newUser;
+    }
+
     return Card(
       color: theme.colorScheme.secondary,
       child: Padding(
@@ -167,12 +175,31 @@ class ToolCard extends StatelessWidget {
                           fontSize: 16,
                         ),
                       ),
-                      Text(
-                        tool.owner.name,
-                        style: TextStyle(
-                          decoration: TextDecoration.underline
-                        ),
-                      ),
+                      /*
+                        OK We're gonna try something!
+                        Let's replace this text with a future
+                        builder that calls getUserName asynchronously
+                        to query for a given use. Let's hope this works!
+                      */
+
+                      // AND IT WORKS!!!!!! LETS GOOOOO
+                      FutureBuilder<String>(
+                        future: getUserName(tool.owner.userID.toString()), 
+                        
+                        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                          if (snapshot.hasData) { 
+                            return Text(
+                              snapshot.data!,
+                              style: TextStyle(
+                                decoration: TextDecoration.underline
+                              ),
+                            );
+                          }
+                          else {
+                            return Text("loading...");
+                          }
+                        }),
+
                       Row(
                         children: [
                           for (var i = 0; i < tool.owner.rating; i++) Icon(Icons.star),
@@ -263,7 +290,7 @@ class ToolCard extends StatelessWidget {
                   onPressed: () => {
                     // add a requested toolCard to the list of cards
                     // to be displayed on the page
-                    appState.addCard(RequestedToolCard(toolID: toolID))
+                    appState.addCard(RequestedToolCard(toolID: toolID, userID: tool.owner.userID)),
                   },
                   child: Text("REQUEST"),
                   ),

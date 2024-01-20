@@ -8,8 +8,6 @@ import 'package:namer_app/communities.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:namer_app/AddUser.dart';
-import 'package:namer_app/GetUser.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -83,8 +81,8 @@ class MyAppState extends ChangeNotifier {
   var cardsList = <Widget>[
     SizedBox(height: 20,),
     ToolCard(toolID: 1),
+    ToolCard(toolID: 2,),
     // AddUser('jack fergusson', 'queens chess club', 20),
-    // GetUserName('1'),
   ];
 
   void addCard(Widget card) {

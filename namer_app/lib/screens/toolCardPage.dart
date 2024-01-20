@@ -10,7 +10,7 @@
 // add one of the second type of widget to the listview, which will 
 // automatically be added to the page.
 //
-// Theres is a lot left to be done, most of which will reuire firebase.
+// Theres is a lot left to be done, most of which will require firebase.
 //
 // For example, the request button should only generate a 'requested tool'
 // card for the specific tool that was requested, but right now it just
