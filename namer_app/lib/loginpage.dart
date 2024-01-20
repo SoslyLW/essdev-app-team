@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/main.dart';
+import 'package:namer_app/registerpage.dart';
 import 'package:provider/provider.dart';
 import'package:flutter/src/painting/gradient.dart';
 
@@ -56,44 +57,61 @@ class LoginPage extends StatefulWidget {
                 padding: EdgeInsets.fromLTRB(20, 20, 40, 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text('Forgt Password or Username',
+                  children: <Widget>[
+                    Text('Forgot Password or Username',
                     style: TextStyle(
+                      fontSize:18,
                       color: Colors.red
                     )
                     )
                   ],
                 )
                 ),
-              SizedBox(height: 20,),
-              GestureDetector(
-                child:Container(
-                  alignment:Alignment.center ,
-                  width: 250,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: 
-                        Color(0xFFf5ab00),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(12.0),
-                    child: Text('Login',
-                    style:TextStyle(
-                      color: Color(0xff241d0f),
+             
+                  Column(
+                    children: <Widget>[
+                      MaterialButton(
+                        minWidth: 100,
+                        height:30,
+                        onPressed:(){
+                          Navigator.push(context,MaterialPageRoute(builder:(context)=>MyHomePage()));
+                        },
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            color:Color(0xFFf5ab00)
+                             ),
+                             borderRadius:BorderRadius.circular(50)
+                        ),
+                        child: Text(
+                          "Login",
+                          style: TextStyle(
+                            color: Color(0xff241d0f),
                       fontSize: 20,
                       fontWeight: FontWeight.bold
-                    )
-                    )
-                    )
-                  )
+                          )
+                        )
+                      ),
+                    ]
                   ),
                   SizedBox(
                     height:30,
                   ),
-                  Text('Sign up',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold
-                  )
+                  MaterialButton(
+                    minWidth: 100,
+                        height:30,
+                        onPressed:(){
+                           Navigator.push(context,MaterialPageRoute(builder:(context)=>RegisterPage()));
+                        },
+                        color:Color(0xFFf5ab00),
+                        shape:RoundedRectangleBorder(
+                          borderRadius:BorderRadius.circular(50)
+                          ),
+                        child: Text('Sign Up',
+                        style:TextStyle(
+                           color: Color(0xff241d0f),
+                           fontWeight: FontWeight.bold,
+                          fontSize: 20
+                        ))
                   )
               ]
             )
