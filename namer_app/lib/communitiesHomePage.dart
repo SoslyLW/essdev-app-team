@@ -5,6 +5,7 @@ import 'package:namer_app/community.dart';
 
 /// TODO
 /// - Remove index number from Browse Communities list
+/// - Change over to FutureBuilder to have a loading screen in small delay before data is loaded
 
 List<Community> allCommunities = [];
 // Community.Default(),
@@ -19,19 +20,7 @@ List<Community> allCommunities = [];
 // Community("Smith Engineering", Icon(Icons.handyman)),
 // Community("Smith Engineering", Icon(Icons.handyman)),
 // ];
-
-void getData() async {
-  var dataFromFirebase =
-      await FirebaseFirestore.instance.collection('communities').get();
-
-  List communitiesDocuments = dataFromFirebase.docs;
-
-  allCommunities = communitiesDocuments
-      .map((commDoc) => Community.fromDoc(commDoc))
-      .toList();
-
-  print(allCommunities);
-}
+bool firstload = true;
 
 class CommunitiesHomePage extends StatefulWidget {
   @override
@@ -41,6 +30,23 @@ class CommunitiesHomePage extends StatefulWidget {
 class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
   bool isDark = false;
   List<Community> communities = [];
+
+  void getData() async {
+    var dataFromFirebase =
+        await FirebaseFirestore.instance.collection('communities').get();
+
+    List communitiesDocuments = dataFromFirebase.docs;
+
+    allCommunities = communitiesDocuments
+        .map((commDoc) => Community.fromDoc(commDoc))
+        .toList();
+
+    if (firstload) {
+      setState(() {
+        firstload = false;
+      });
+    }
+  }
 
   void filterCommunities(String query) {
     setState(() {
