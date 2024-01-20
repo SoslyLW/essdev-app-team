@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/commmunityDetail.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-int atomicId = 1;
+int atomicId = 1; // Want to transition atomic id to a firebase function
 
 class Community {
   int id;

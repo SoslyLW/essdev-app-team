@@ -1,23 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:namer_app/addCommunityPage.dart';
 import 'package:namer_app/community.dart';
 
 /// TODO
 /// - Remove index number from Browse Communities list
 
-List<Community> allCommunities = [
-  Community.Default(),
-  Community("Smith Engineering", Icon(Icons.handyman)),
-  Community("Queen's Engineering", Icon(Icons.engineering)),
-  Community("Rich People District", Icon(Icons.currency_exchange_outlined)),
-  Community("Bus People", Icon(Icons.bus_alert)),
-  Community("Shipping Company", Icon(Icons.local_shipping)),
-  Community("Really Super Duper Long Name For Testing Ridiculous",
-      Icon(Icons.horizontal_rule)),
-  Community("Smith Engineering", Icon(Icons.handyman)),
-  Community("Smith Engineering", Icon(Icons.handyman)),
-  Community("Smith Engineering", Icon(Icons.handyman)),
-];
+List<Community> allCommunities = [];
+// Community.Default(),
+// Community("Smith Engineering", Icon(Icons.handyman)),
+// Community("Queen's Engineering", Icon(Icons.engineering)),
+// Community("Rich People District", Icon(Icons.currency_exchange_outlined)),
+// Community("Bus People", Icon(Icons.bus_alert)),
+// Community("Shipping Company", Icon(Icons.local_shipping)),
+// Community("Really Super Duper Long Name For Testing Ridiculous",
+//     Icon(Icons.horizontal_rule)),
+// Community("Smith Engineering", Icon(Icons.handyman)),
+// Community("Smith Engineering", Icon(Icons.handyman)),
+// Community("Smith Engineering", Icon(Icons.handyman)),
+// ];
+
+void GetData() {
+  // communities = [];
+  // allCommunities = [];
+  // communities.clear();
+  // allCommunities.clear();
+
+  FirebaseFirestore.instance
+      .collection('communities')
+      .get()
+      .then((QuerySnapshot querySnapshot) {
+    allCommunities.clear();
+    querySnapshot.docs.forEach((doc) {
+      allCommunities.add(Community(doc["name"], Icon(Icons.handyman)));
+    });
+  });
+}
 
 class CommunitiesHomePage extends StatefulWidget {
   @override
@@ -26,7 +44,8 @@ class CommunitiesHomePage extends StatefulWidget {
 
 class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
   bool isDark = false;
-  List<Community> communities = allCommunities;
+  // List<Community> communities = allCommunities;
+  List<Community> communities = [];
 
   void filterCommunities(String query) {
     setState(() {
@@ -40,6 +59,10 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    GetData();
+
+    communities = allCommunities.toList();
 
     return Scaffold(
       body: SafeArea(
