@@ -20,21 +20,17 @@ List<Community> allCommunities = [];
 // Community("Smith Engineering", Icon(Icons.handyman)),
 // ];
 
-void GetData() {
-  // communities = [];
-  // allCommunities = [];
-  // communities.clear();
-  // allCommunities.clear();
+void getData() async {
+  var dataFromFirebase =
+      await FirebaseFirestore.instance.collection('communities').get();
 
-  FirebaseFirestore.instance
-      .collection('communities')
-      .get()
-      .then((QuerySnapshot querySnapshot) {
-    allCommunities.clear();
-    querySnapshot.docs.forEach((doc) {
-      allCommunities.add(Community(doc["name"], Icon(Icons.handyman)));
-    });
-  });
+  List communitiesDocuments = dataFromFirebase.docs;
+
+  allCommunities = communitiesDocuments
+      .map((commDoc) => Community.fromDoc(commDoc))
+      .toList();
+
+  print(allCommunities);
 }
 
 class CommunitiesHomePage extends StatefulWidget {
@@ -44,7 +40,6 @@ class CommunitiesHomePage extends StatefulWidget {
 
 class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
   bool isDark = false;
-  // List<Community> communities = allCommunities;
   List<Community> communities = [];
 
   void filterCommunities(String query) {
@@ -60,7 +55,7 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    GetData();
+    getData();
 
     communities = allCommunities.toList();
 

@@ -16,6 +16,31 @@ class Community {
       : icon = Icon(Icons.person),
         id = atomicId++,
         name = "Default Community";
+
+  factory Community.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+    return Community(
+      data?['name'],
+      Icon(Icons.abc),
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      if (name != null) "name": name,
+      if (id != null) "state": id,
+    };
+  }
+
+  factory Community.fromDoc(doc) {
+    if (doc['icon'] != null && doc['icon'] != 'null') {
+      return Community(doc['name'], Icon(IconData(doc['icon'])));
+    }
+    return Community(doc['name'], Icon(Icons.handyman));
+  }
 }
 
 class CommunityCard extends StatelessWidget {
