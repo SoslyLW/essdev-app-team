@@ -82,9 +82,10 @@ class _MessageListState extends State<MessageList> {
           Expanded(
               child: Row(
             children: <Widget>[
-              Icon(
-                Icons.person,
-                size: 50,
+              Image.network(
+                widget.imageURL,
+                height: 50,
+                width: 50,
               ),
               SizedBox(
                 width: 16,
