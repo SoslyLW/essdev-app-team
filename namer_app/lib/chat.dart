@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class ChatPage extends StatefulWidget {
+  final String name;
+  const ChatPage({super.key, required this.name});
+
   @override
   _ChatPageState createState() => _ChatPageState();
 }
@@ -56,7 +59,7 @@ class _ChatPageState extends State<ChatPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    "John Doe",
+                    widget.name,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(

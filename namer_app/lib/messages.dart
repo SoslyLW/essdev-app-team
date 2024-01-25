@@ -23,13 +23,11 @@ class MessageList extends StatefulWidget {
   String messageText;
   String imageURL;
   Timestamp time;
-  bool isMessageRead;
   MessageList(
       {required this.name,
       required this.messageText,
       required this.imageURL,
-      required this.time,
-      required this.isMessageRead});
+      required this.time});
   @override
   _MessageListState createState() => _MessageListState();
 }
@@ -72,7 +70,9 @@ class _MessageListState extends State<MessageList> {
     return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
-          return ChatPage();
+          return ChatPage(
+            name: widget.name,
+          );
         }));
       },
       child: Container(
@@ -106,11 +106,7 @@ class _MessageListState extends State<MessageList> {
                           Text(
                             widget.messageText,
                             style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.grey.shade600,
-                                fontWeight: widget.isMessageRead
-                                    ? FontWeight.bold
-                                    : FontWeight.normal),
+                                fontSize: 13, color: Colors.grey.shade600),
                           ),
                         ],
                       )))
@@ -118,10 +114,7 @@ class _MessageListState extends State<MessageList> {
           )),
           Text(
             widget.time.toDate().toString(),
-            style: TextStyle(
-                fontSize: 12,
-                fontWeight:
-                    widget.isMessageRead ? FontWeight.bold : FontWeight.normal),
+            style: TextStyle(fontSize: 12),
           )
         ]),
       ),
@@ -235,6 +228,5 @@ Widget _buildUserListItem(DocumentSnapshot document) {
       name: data['name'],
       messageText: data['messageText'],
       imageURL: data['imageURL'],
-      time: data['time'],
-      isMessageRead: data['isMessageRead']);
+      time: data['time']);
 }
