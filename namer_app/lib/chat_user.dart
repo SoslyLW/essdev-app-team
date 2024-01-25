@@ -29,32 +29,6 @@ class ChatUser extends Equatable {
         time: time ?? this.time,
       );
 
-  Map<String, dynamic> toJson() => {
-        "message": messageText,
-        "imageURL": imageURL,
-        "12:00": time,
-      };
-  factory ChatUser.fromDocument(DocumentSnapshot snapshot) {
-    String imageURL = "";
-    String nickname = "";
-    String time = "";
-
-    try {
-      imageURL = snapshot.get("imageURL");
-      nickname = snapshot.get("message");
-      time = snapshot.get("12:00");
-    } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-    }
-    return ChatUser(
-      name: snapshot.id,
-      imageURL: imageURL,
-      messageText: nickname,
-      time: time,
-    );
-  }
   @override
   // TODO: implement props
   List<Object?> get props => [
@@ -63,4 +37,9 @@ class ChatUser extends Equatable {
         messageText,
         time,
       ];
+}
+
+class ChatUserDatabaseService {
+  final CollectionReference chatUserCollection =
+      FirebaseFirestore.instance.collection('chat');
 }
