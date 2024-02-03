@@ -12,7 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   english_words: ^4.0.0
   provider: ^6.0.0
   firebase_core: ^2.24.2
@@ -20,6 +19,9 @@ dependencies:
   email_validator: ^2.1.17
   dob_input_field: ^2.0.0
   country_picker: ^2.0.23
+  email_validator: ^2.1.17
+  country_picker: ^2.0.23
+  dob_input_field: ^2.0.0
   email_validator: ^2.1.17
   country_picker: ^2.0.23
   dob_input_field: ^2.0.0
@@ -32,4 +34,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+
 

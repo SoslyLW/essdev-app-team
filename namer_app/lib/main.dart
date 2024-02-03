@@ -82,6 +82,18 @@ class _MyHomePageState extends State<MyHomePage> {
         case 5:
         page = RegisterPage();
         break;
+      case 4:
+        page = LoginPage();
+        break;
+        case 5:
+        page = RegisterPage();
+        break;
+      case 4:
+        page = LoginPage();
+        break;
+        case 5:
+        page = RegisterPage();
+        break;
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -165,5 +177,113 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       );
     });
+  }
+}
+class GeneratorPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+    var pair = appState.current;
+
+    IconData icon;
+    if (appState.favorites.contains(pair)) {
+      icon = Icons.favorite;
+    } else {
+      icon = Icons.favorite_border;
+    }
+
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          BigCard(pair: pair),
+          SizedBox(height: 10),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  appState.toggleFavorite();
+                },
+                icon: Icon(icon),
+                label: Text('Like'),
+              ),
+              SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: () {
+                  appState.getNext();
+                },
+                child: Text('Next'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FavoritesPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+    var favs = appState.favorites;
+
+    if (favs.isEmpty) {
+      return Center(
+        child: Text('No favorites yet.'),
+      );
+    }
+
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: ListView(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Text('You have '
+                  '${appState.favorites.length} favorites:'),
+            ),
+            for (var fav in favs)
+              ListTile(
+                leading: Icon(Icons.favorite),
+                title: Text(fav.toString()),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class BigCard extends StatelessWidget {
+  const BigCard({
+    super.key,
+    required this.pair,
+  });
+
+  final WordPair pair;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    final style = theme.textTheme.displayMedium!.copyWith(
+      color: theme.colorScheme.onPrimary,
+    );
+
+    return Card(
+      color: theme.colorScheme.primary,
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Text(
+          pair.asLowerCase,
+          style: style,
+          semanticsLabel: "${pair.first} ${pair.second}",
+        ),
+      ),
+    );
   }
 }
