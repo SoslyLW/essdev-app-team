@@ -72,6 +72,7 @@ class _MessageListState extends State<MessageList> {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return ChatPage(
             name: widget.name,
+            imageURL: widget.imageURL,
           );
         }));
       },
@@ -82,10 +83,16 @@ class _MessageListState extends State<MessageList> {
           Expanded(
               child: Row(
             children: <Widget>[
-              Image.network(
-                widget.imageURL,
-                height: 50,
+              Container(
                 width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: NetworkImage(widget.imageURL),
+                    fit: BoxFit.fill,
+                  ),
+                ),
               ),
               SizedBox(
                 width: 16,

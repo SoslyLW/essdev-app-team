@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:namer_app/chat_service.dart';
 
 class ChatPage extends StatefulWidget {
   final String name;
-  const ChatPage({super.key, required this.name});
+  final String imageURL;
+  const ChatPage({super.key, required this.name, required this.imageURL});
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -14,15 +17,17 @@ class ChatMessage {
   ChatMessage({required this.messageContent, required this.messageType});
 }
 
-List<ChatMessage> messages = [
-  ChatMessage(messageContent: "Hello John", messageType: "receiver"),
-  ChatMessage(messageContent: "How have you been?", messageType: "sender"),
-  ChatMessage(messageContent: "Very good thanks.", messageType: "receiver"),
-  ChatMessage(messageContent: "cool...", messageType: "sender"),
-  ChatMessage(messageContent: "HEY", messageType: "receiver")
-];
-
 class _ChatPageState extends State<ChatPage> {
+  final TextEditingController _messageController = TextEditingController();
+  final ChatService _chatService = ChatService();
+
+  void sendMessage() async {
+    if (_messageController.text.isNotEmpty) {
+      await _chatService.sendMessage(widget.name, _messageController.text);
+      _messageController.clear();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -43,12 +48,16 @@ class _ChatPageState extends State<ChatPage> {
                     Icons.arrow_back,
                     color: theme.colorScheme.onSecondary,
                   )),
-              SizedBox(
-                width: 2,
-              ),
-              Icon(
-                Icons.person,
-                size: 50,
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: NetworkImage(widget.imageURL),
+                    fit: BoxFit.fill,
+                  ),
+                ),
               ),
               SizedBox(
                 width: 12,
@@ -79,32 +88,25 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Stack(
         children: <Widget>[
-          ListView.builder(
-              itemCount: messages.length,
-              shrinkWrap: true,
-              padding: EdgeInsets.only(top: 10, bottom: 10),
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Container(
-                    padding: EdgeInsets.only(
-                        left: 16, right: 16, top: 10, bottom: 10),
-                    child: Align(
-                        alignment: (messages[index].messageType == "receiver"
-                            ? Alignment.topLeft
-                            : Alignment.topRight),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: (messages[index].messageType == "receiver"
-                                  ? theme.colorScheme.onError
-                                  : theme.colorScheme.secondary)),
-                          padding: EdgeInsets.all(15),
-                          child: Text(
-                            messages[index].messageContent,
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        )));
-              }),
+          StreamBuilder(
+            stream: _chatService.getMessages(widget.name),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text('Error${snapshot.error}');
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Text('loading...');
+              }
+              return ListView(
+                shrinkWrap: true,
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                physics: NeverScrollableScrollPhysics(),
+                children: snapshot.data!.docs
+                    .map((document) => _buildMessageItem(document))
+                    .toList(),
+              );
+            },
+          ),
           Align(
             alignment: Alignment.bottomLeft,
             child: Container(
@@ -130,11 +132,12 @@ class _ChatPageState extends State<ChatPage> {
                     width: 15,
                   ),
                   FloatingActionButton(
-                    onPressed: () {},
+                    onPressed: sendMessage,
                     backgroundColor: theme.colorScheme.secondary,
                     elevation: 0,
                     child: Icon(
                       Icons.send,
+                      size: 40,
                       color: theme.colorScheme.onSecondary,
                     ),
                   )
@@ -146,4 +149,14 @@ class _ChatPageState extends State<ChatPage> {
       ),
     );
   }
+}
+
+Widget _buildMessageItem(DocumentSnapshot document) {
+  Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+  var alignment = Alignment.centerRight;
+
+  return Container(
+    alignment: alignment,
+    child: Column(children: [Text(data['message'])]),
+  );
 }
