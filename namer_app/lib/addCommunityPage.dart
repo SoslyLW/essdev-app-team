@@ -6,15 +6,6 @@ class AddCommunityPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final myController = TextEditingController();
-
-    @override
-    void dispose() {
-      // Clean up the controller when the widget is disposed.
-      myController.dispose();
-      // super.dispose();
-    }
-
     return Scaffold(
       body: SafeArea(
         child: Padding(

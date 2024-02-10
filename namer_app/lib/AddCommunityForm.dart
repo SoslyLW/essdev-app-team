@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// TODO
 /// - Add community icon selector
 /// - Add ability to invite users from the main screen
+/// - Fix issue where selecting public/private erases the name
 
 enum PublicPrivate { public, private }
 
@@ -16,6 +18,16 @@ class AddCommunityForm extends StatefulWidget {
 }
 
 class AddCommunityFormState extends State<AddCommunityForm> {
+  var communities = FirebaseFirestore.instance.collection('communities');
+
+  Future<void> addCommunity(String _name, bool _private) {
+    // Call the user's CollectionReference to add a new user
+    return communities
+        .add({'icon': null, 'name': _name, 'private': _private})
+        .then((value) => print("Community Added"))
+        .catchError((error) => print("Failed to add community: $error"));
+  }
+
   // Create a global key that uniquely identifies the Form widget
   // and allows validation of the form.
   //
@@ -27,6 +39,14 @@ class AddCommunityFormState extends State<AddCommunityForm> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final nameController = TextEditingController();
+
+    @override
+    void dispose() {
+      // Clean up the controller when the widget is disposed.
+      nameController.dispose();
+      super.dispose();
+    }
 
     // Build a Form widget using the _formKey created above.
     return Form(
@@ -57,7 +77,9 @@ class AddCommunityFormState extends State<AddCommunityForm> {
                     borderRadius: BorderRadius.circular(20),
                     borderSide: BorderSide(color: Colors.grey.shade100)),
               ),
+              controller: nameController,
             ),
+            //Public/Private Selector
             Row(
               children: [
                 Expanded(
@@ -90,6 +112,7 @@ class AddCommunityFormState extends State<AddCommunityForm> {
                 ),
               ],
             ),
+            //Spacer
             Expanded(
                 child:
                     SizedBox()), //Moves button to bottom of screen (optional)
@@ -103,7 +126,13 @@ class AddCommunityFormState extends State<AddCommunityForm> {
                 onPressed: () {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (_formKey.currentState!.validate()) {
-                    // Success form submit code to go here
+                    bool private = false;
+                    if (visibility == PublicPrivate.private) {
+                      private = true;
+                    }
+
+                    addCommunity(nameController.text, private);
+
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing Data')),
                     );
