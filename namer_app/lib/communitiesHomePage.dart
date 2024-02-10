@@ -6,20 +6,9 @@ import 'package:namer_app/community.dart';
 /// TODO
 /// - Remove index number from Browse Communities list
 /// - Change over to FutureBuilder to have a loading screen in small delay before data is loaded
+/// Load one local copy of the database first and only update that copy when the user makes a change
 
 List<Community> allCommunities = [];
-// Community.Default(),
-// Community("Smith Engineering", Icon(Icons.handyman)),
-// Community("Queen's Engineering", Icon(Icons.engineering)),
-// Community("Rich People District", Icon(Icons.currency_exchange_outlined)),
-// Community("Bus People", Icon(Icons.bus_alert)),
-// Community("Shipping Company", Icon(Icons.local_shipping)),
-// Community("Really Super Duper Long Name For Testing Ridiculous",
-//     Icon(Icons.horizontal_rule)),
-// Community("Smith Engineering", Icon(Icons.handyman)),
-// Community("Smith Engineering", Icon(Icons.handyman)),
-// Community("Smith Engineering", Icon(Icons.handyman)),
-// ];
 bool firstload = true;
 
 class CommunitiesHomePage extends StatefulWidget {

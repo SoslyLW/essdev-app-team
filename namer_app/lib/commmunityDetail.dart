@@ -5,15 +5,41 @@ import 'package:namer_app/community.dart';
 /// - Figure out how to keep bottom and top bars when going from community home
 /// page to community detail page
 /// - Add Restriction on Community name overflow
-/// - Add back button for IOS
 
 class CommunitiesDetailPage extends StatelessWidget {
   final Community community;
   CommunitiesDetailPage(this.community) : super();
 
+  void handleClick(int listItem) {
+    switch (listItem) {
+      case 0:
+      //Switch to edit page
+      case 1:
+      //Switch to delete page
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
+      appBar: AppBar(
+        actions: <Widget>[
+          PopupMenuButton<int>(
+              onSelected: (item) => handleClick(item),
+              itemBuilder: (context) => [
+                    PopupMenuItem<int>(value: 0, child: Text('Edit community')),
+                    PopupMenuItem<int>(
+                        value: 1, child: Text('Delete community')),
+                  ],
+              icon: Icon(
+                Icons.more_vert,
+                color: theme.colorScheme.onBackground,
+              ),
+              color: theme.colorScheme.primary),
+        ],
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 16),
@@ -28,12 +54,12 @@ class CommunitiesDetailPage extends StatelessWidget {
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
               ),
-              //Search Bar
+              //Search Bar (for tools)
               Padding(
                 padding: EdgeInsets.only(top: 16, left: 16, right: 16),
                 child: TextField(
                   decoration: InputDecoration(
-                      hintText: "Search...",
+                      hintText: "Search Tools...",
                       hintStyle: TextStyle(color: Colors.grey.shade600),
                       prefixIcon: Icon(
                         Icons.search,
