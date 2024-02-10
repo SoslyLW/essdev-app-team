@@ -14,6 +14,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // we do indeed get here, so firebase is initialized :)
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   runApp(MyApp(firestore: db,));

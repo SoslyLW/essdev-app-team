@@ -44,38 +44,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDNN4PEJLBjDkH-W5dva-ZHxeKLW8bUHzk',
-    appId: '1:560648403823:web:09dd3dcef28ead0785869a',
-    messagingSenderId: '560648403823',
-    projectId: 'tool-pool',
-    authDomain: 'tool-pool.firebaseapp.com',
-    storageBucket: 'tool-pool.appspot.com',
-    measurementId: 'G-XLZ3S3V36G',
+    apiKey: 'AIzaSyC3ECMisdSqLb0y1eqLi-s8qDNBvtwV9Bk',
+    appId: '1:259613853445:web:38d83f14a36ef3952f596c',
+    messagingSenderId: '259613853445',
+    projectId: 'essdev-tool-sharing-app',
+    authDomain: 'essdev-tool-sharing-app.firebaseapp.com',
+    storageBucket: 'essdev-tool-sharing-app.appspot.com',
+    measurementId: 'G-DZF4E0341X',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDqIHGvkoCuDRfkvj62ygVIkWRosJfzr5w',
-    appId: '1:560648403823:android:92759f424835a49e85869a',
-    messagingSenderId: '560648403823',
-    projectId: 'tool-pool',
-    storageBucket: 'tool-pool.appspot.com',
+    apiKey: 'AIzaSyDwy_n088rqAPbj5J8N3EuIspgrekiMQkc',
+    appId: '1:259613853445:android:4651e990c5d0fbe32f596c',
+    messagingSenderId: '259613853445',
+    projectId: 'essdev-tool-sharing-app',
+    storageBucket: 'essdev-tool-sharing-app.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDdY57IT0VhNkEi_Lr-pVEdAgUuIE8zVx4',
-    appId: '1:560648403823:ios:4450a277be87e79b85869a',
-    messagingSenderId: '560648403823',
-    projectId: 'tool-pool',
-    storageBucket: 'tool-pool.appspot.com',
+    apiKey: 'AIzaSyA9R4fZ7I5PtjYTv2wL8sFnSY7D6qcw3cs',
+    appId: '1:259613853445:ios:c8a21c92ce2143642f596c',
+    messagingSenderId: '259613853445',
+    projectId: 'essdev-tool-sharing-app',
+    storageBucket: 'essdev-tool-sharing-app.appspot.com',
+    iosClientId: '259613853445-bimndk85ch6t8se3p9kfe2147d6nusqr.apps.googleusercontent.com',
     iosBundleId: 'com.example.namerApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDdY57IT0VhNkEi_Lr-pVEdAgUuIE8zVx4',
-    appId: '1:560648403823:ios:8dffb42a49fc25c585869a',
-    messagingSenderId: '560648403823',
-    projectId: 'tool-pool',
-    storageBucket: 'tool-pool.appspot.com',
+    apiKey: 'AIzaSyA9R4fZ7I5PtjYTv2wL8sFnSY7D6qcw3cs',
+    appId: '1:259613853445:ios:b78bf37c8660e3512f596c',
+    messagingSenderId: '259613853445',
+    projectId: 'essdev-tool-sharing-app',
+    storageBucket: 'essdev-tool-sharing-app.appspot.com',
+    iosClientId: '259613853445-vqds2ih6a0q09t8nfqm8ggo77kearkfb.apps.googleusercontent.com',
     iosBundleId: 'com.example.namerApp.RunnerTests',
   );
 }

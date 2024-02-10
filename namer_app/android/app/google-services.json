@@ -1,26 +1,43 @@
 {
   "project_info": {
-    "project_number": "560648403823",
-    "project_id": "tool-pool",
-    "storage_bucket": "tool-pool.appspot.com"
+    "project_number": "259613853445",
+    "project_id": "essdev-tool-sharing-app",
+    "storage_bucket": "essdev-tool-sharing-app.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:560648403823:android:92759f424835a49e85869a",
+        "mobilesdk_app_id": "1:259613853445:android:4651e990c5d0fbe32f596c",
         "android_client_info": {
           "package_name": "com.example.namer_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "259613853445-9vdakusl74g938ee40p7aid8gvtu5aik.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyDqIHGvkoCuDRfkvj62ygVIkWRosJfzr5w"
+          "current_key": "AIzaSyDwy_n088rqAPbj5J8N3EuIspgrekiMQkc"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "259613853445-9vdakusl74g938ee40p7aid8gvtu5aik.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "259613853445-bimndk85ch6t8se3p9kfe2147d6nusqr.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.namerApp"
+              }
+            }
+          ]
         }
       }
     }
