@@ -25,6 +25,7 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
         await FirebaseFirestore.instance.collection('communities').get();
 
     List communitiesDocuments = dataFromFirebase.docs;
+    //print(communitiesDocuments);
 
     allCommunities = communitiesDocuments
         .map((commDoc) => Community.fromDoc(commDoc))

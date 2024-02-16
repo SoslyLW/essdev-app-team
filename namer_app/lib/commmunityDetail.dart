@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/community.dart';
+import 'package:namer_app/editCommunityPage.dart';
 
 /// TODO
 /// - Figure out how to keep bottom and top bars when going from community home
@@ -10,18 +11,24 @@ class CommunitiesDetailPage extends StatelessWidget {
   final Community community;
   CommunitiesDetailPage(this.community) : super();
 
-  void handleClick(int listItem) {
-    switch (listItem) {
-      case 0:
-      //Switch to edit page
-      case 1:
-      //Switch to delete page
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    void handleClick(int listItem) {
+      switch (listItem) {
+        case 0:
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return EditCommunityPage(community);
+          }));
+        //Switch to edit page
+        case 1:
+        // Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //   return AddCommunityPage();
+        // }));
+        //Switch to delete page
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
