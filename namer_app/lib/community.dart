@@ -8,10 +8,11 @@ class Community {
   int id;
   String name;
   Icon icon = Icon(Icons.person);
-  bool private = false;
+  bool private = true;
   String firebaseDocumentId = "";
 
-  Community(this.name, this.icon, {this.firebaseDocumentId = ""})
+  Community(this.name, this.icon,
+      {this.firebaseDocumentId = "", this.private = true})
       : id = atomicId++;
 
   Community.Default()
@@ -30,9 +31,9 @@ class Community {
     if (doc['icon'] != null && doc['icon'] != 'null') {
       return Community(doc['name'], Icon(IconData(doc['icon'])));
     }
-    //print(doc.data());
+
     return Community(doc['name'], Icon(Icons.handyman),
-        firebaseDocumentId: doc.id);
+        firebaseDocumentId: doc.id, private: doc['private']);
   }
 }
 

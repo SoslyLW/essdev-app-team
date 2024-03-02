@@ -47,12 +47,28 @@ class EditCommunityFormState extends State<EditCommunityForm> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
   PublicPrivate? visibility = PublicPrivate.public;
+  String updatedName = "";
+  bool changedPrivacy = false;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final nameController = TextEditingController();
-    nameController.text = widget.community.name.toString();
+    if (updatedName != "") {
+      nameController.text = updatedName;
+    } else {
+      nameController.text = widget.community.name.toString();
+    }
+
+    //Setup visibility
+    if (!changedPrivacy) {
+      if (widget.community.private) {
+        print("Private");
+        visibility = PublicPrivate.private;
+      } else {
+        visibility = PublicPrivate.public;
+      }
+    }
 
     @override
     void dispose() {
@@ -101,6 +117,8 @@ class EditCommunityFormState extends State<EditCommunityForm> {
                     groupValue: visibility,
                     onChanged: (PublicPrivate? value) {
                       if (value != null) {
+                        updatedName = nameController.text;
+                        changedPrivacy = true;
                         setState(() => visibility = value);
                       }
                     },
@@ -115,6 +133,8 @@ class EditCommunityFormState extends State<EditCommunityForm> {
                     groupValue: visibility,
                     onChanged: (PublicPrivate? value) {
                       if (value != null) {
+                        updatedName = nameController.text;
+                        changedPrivacy = true;
                         setState(() => visibility = value);
                       }
                     },
