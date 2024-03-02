@@ -166,12 +166,10 @@ class EditCommunityFormState extends State<EditCommunityForm> {
                       private = true;
                     }
 
-                    //addCommunity(nameController.text, private);
                     editCommunity(nameController.text, private);
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
-                    );
+                    //Exit the form
+                    Navigator.pop(context);
                   }
                 },
                 child: const Text('Submit'),
