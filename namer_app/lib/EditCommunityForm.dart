@@ -54,6 +54,8 @@ class EditCommunityFormState extends State<EditCommunityForm> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final nameController = TextEditingController();
+
+    //Setup name field
     if (updatedName != "") {
       nameController.text = updatedName;
     } else {

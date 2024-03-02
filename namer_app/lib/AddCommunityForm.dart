@@ -35,11 +35,16 @@ class AddCommunityFormState extends State<AddCommunityForm> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
   PublicPrivate? visibility = PublicPrivate.public;
+  String updatedName = "";
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final nameController = TextEditingController();
+
+    if (updatedName != "") {
+      nameController.text = updatedName;
+    }
 
     @override
     void dispose() {
@@ -88,6 +93,7 @@ class AddCommunityFormState extends State<AddCommunityForm> {
                     groupValue: visibility,
                     onChanged: (PublicPrivate? value) {
                       if (value != null) {
+                        updatedName = nameController.text;
                         setState(() => visibility = value);
                       }
                     },
@@ -102,6 +108,7 @@ class AddCommunityFormState extends State<AddCommunityForm> {
                     groupValue: visibility,
                     onChanged: (PublicPrivate? value) {
                       if (value != null) {
+                        updatedName = nameController.text;
                         setState(() => visibility = value);
                       }
                     },
