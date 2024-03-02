@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import 'package:namer_app/main.dart';
 
 /// TODO
 /// - Add Tool icon selector
@@ -20,10 +22,10 @@ class AddToolForm extends StatefulWidget {
 class AddToolFormState extends State<AddToolForm> {
   var tools = FirebaseFirestore.instance.collection('tools');
 
-  Future<void> addTool(String name, String condition) {
+  Future<void> addTool(String name, String condition, ownerID) {
     // Call the user's CollectionReference to add a new user
     return tools
-        .add({'name': name, 'condition': condition})
+        .add({'name': name, 'condition': condition, 'ownerID': ownerID})
         .then((value) => print("Tool Added"))
         .catchError((error) => print("Failed to add tool: $error"));
   }
@@ -40,10 +42,12 @@ class AddToolFormState extends State<AddToolForm> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    var appState = context.watch<MyAppState>();
+
     // must have a unique name controller for each text field
     final nameController = TextEditingController();
     final conditionController = TextEditingController();
-
+    
     @override
     void dispose() {
       // Clean up the controller when the widget is disposed.
@@ -123,7 +127,7 @@ class AddToolFormState extends State<AddToolForm> {
                 onPressed: () {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (_formKey.currentState!.validate()) {
-                    addTool(nameController.text, conditionController.text);
+                    addTool(nameController.text, conditionController.text, appState.thisUserID);
 
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing Data')),

@@ -1,4 +1,3 @@
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/messages.dart';
 import 'package:namer_app/widgets/toolCard.dart';
@@ -15,7 +14,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  // we do indeed get here, so firebase is initialized :)
   FirebaseFirestore db = FirebaseFirestore.instance;
 
   runApp(MyApp(firestore: db,));
@@ -50,8 +48,7 @@ class MyApp extends StatelessWidget {
               brightness: Brightness.light,
               error: Colors.red,
               onError: Colors.white,
-              surface:
-                  Color(0xFFf5ab00), //Default background for card-like widgets
+              surface:Color(0xFFf5ab00), //Default background for card-like widgets
               onSurface: Color(0xff241d0f)),
         ),
         home: MyHomePage(),
@@ -61,31 +58,15 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
-
-  // ↓ Add this.
-  void getNext() {
-    current = WordPair.random();
-    notifyListeners();
-  }
-
-  var favorites = <WordPair>[];
-
-  void toggleFavorite() {
-    if (favorites.contains(current)) {
-      favorites.remove(current);
-    } else {
-      favorites.add(current);
-    }
-    notifyListeners();
-  }
-
   var cardsList = <Widget>[
-    SizedBox(height: 20,),
+    SizedBox(height: 25,),
     ToolCard(toolID: 1),
     ToolCard(toolID: 2,),
-    // AddUser('jack fergusson', 'queens chess club', 20),
   ];
+
+  // ID of the currently signed in user. To be used when creating
+  // new tools. Automatically linked to current user.
+  var thisUserID = 1;
 
   void addCard(Widget card) {
     cardsList.add(card);
@@ -135,8 +116,8 @@ class _MyHomePageState extends State<MyHomePage> {
               label: 'Home',
             ),
             NavigationDestination(
-              icon: Icon(Icons.business),
-              label: 'Business',
+              icon: Icon(Icons.handyman),
+              label: 'Tools',
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.message),
@@ -162,114 +143,5 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       );
     });
-  }
-}
-
-class GeneratorPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var pair = appState.current;
-
-    IconData icon;
-    if (appState.favorites.contains(pair)) {
-      icon = Icons.favorite;
-    } else {
-      icon = Icons.favorite_border;
-    }
-
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          BigCard(pair: pair),
-          SizedBox(height: 10),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  appState.toggleFavorite();
-                },
-                icon: Icon(icon),
-                label: Text('Like'),
-              ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNext();
-                },
-                child: Text('Next'),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class FavoritesPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-    var favs = appState.favorites;
-
-    if (favs.isEmpty) {
-      return Center(
-        child: Text('No favorites yet.'),
-      );
-    }
-
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: ListView(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Text('You have '
-                  '${appState.favorites.length} favorites:'),
-            ),
-            for (var fav in favs)
-              ListTile(
-                leading: Icon(Icons.favorite),
-                title: Text(fav.toString()),
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class BigCard extends StatelessWidget {
-  const BigCard({
-    super.key,
-    required this.pair,
-  });
-
-  final WordPair pair;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    final style = theme.textTheme.displayMedium!.copyWith(
-      color: theme.colorScheme.onPrimary,
-    );
-
-    return Card(
-      color: theme.colorScheme.primary,
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Text(
-          pair.asLowerCase,
-          style: style,
-          semanticsLabel: "${pair.first} ${pair.second}",
-        ),
-      ),
-    );
   }
 }

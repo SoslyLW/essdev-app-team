@@ -1,27 +1,24 @@
 # essdev-app-team
 Ok so here's where we stand. 
 
-The current version of things has a function that can query the cloud firestore database given a userID which returns the user's name. This function is asynchronous so it must be called from a future builder, which will wait for a response from the query. 
+There is a widget that takes in the ID of a tool stored in the database 
+and displays a card with information about the tool and the user that owns 
+that tool. These cards are all displayed in toolCardPage. 
 
-I have manually added 2 documents to the users database with IDs 1 & 2 with different names. When the app boots up, both of these documents are queried and the results are applied to a toolCard widget, which are manually called from main.
+Currently, each of these cards show up because they are manually created from main.dart. Ideally, there would be 2 types of pages: view your own tools and view all available tools. An available tool means it is owned by a user who is part of one of the same communities as you. This could all be done through querying the databse. These pages should have different widgets to show the tool, as you can't request your own tool.
 
-There widgets have request buttons which, when pressed, make a call to add a requestedToolCard widget to the global widget list in main. In its current form, the button's call must manually pass in the ID of the user. 
-
-The next steps for this part of the project is to add a database of tools, related to the database of users, in the main project db. I want the toolCards to be generated from just their ID in reference to the db. 
-
-Later on, I would like to add a form to create a user or tool and store that in the db.
-
-That's all for now!
-
+Hitting 'REQUEST' on an available tool should send the request to the user associated with the tool. How to do this? I don't quite know yet. Maybe start chat between users and append the request message to the list of messages in the database. Perhaps.
 
 TODO:
 
-- Make form to create a new tool for a given user
-- Add the ability to upload and display photos of the tool
+- Add the ability to upload and display photos of the tool?
 - Add functionality to duration selector
-- Have the page of tools just query the whole db and show all tools
+- Make 'My Tools' page
+- Make 'Available Tools' page
+- Ability to remove tool from your list of tools
 
 DONE:
 
 - Transfer over to the main essdev database so Logan can use tools
 - have toolCard query the database instead of using default tool
+- Make form to create a new tool for a given user
