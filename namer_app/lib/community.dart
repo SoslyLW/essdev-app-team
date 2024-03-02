@@ -19,17 +19,6 @@ class Community {
         id = atomicId++,
         name = "Default Community";
 
-  factory Community.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
-    SnapshotOptions? options,
-  ) {
-    final data = snapshot.data();
-    return Community(
-      data?['name'],
-      Icon(Icons.abc),
-    );
-  }
-
   Map<String, dynamic> toFirestore() {
     return {
       if (name != null) "name": name,
@@ -42,7 +31,8 @@ class Community {
       return Community(doc['name'], Icon(IconData(doc['icon'])));
     }
     //print(doc.data());
-    return Community(doc['name'], Icon(Icons.handyman));
+    return Community(doc['name'], Icon(Icons.handyman),
+        firebaseDocumentId: doc.id);
   }
 }
 

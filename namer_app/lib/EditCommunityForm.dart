@@ -22,12 +22,22 @@ class EditCommunityForm extends StatefulWidget {
 class EditCommunityFormState extends State<EditCommunityForm> {
   var communities = FirebaseFirestore.instance.collection('communities');
 
-  Future<void> addCommunity(String _name, bool _private) {
-    // Call the user's CollectionReference to add a new user
-    return communities
-        .add({'icon': null, 'name': _name, 'private': _private})
-        .then((value) => print("Community Added"))
-        .catchError((error) => print("Failed to add community: $error"));
+  Future<void> editCommunity(String _name, bool _private) {
+    //Check if community has a document ID
+    if (widget.community.firebaseDocumentId == "") {
+      print("Error: No document ID");
+      return Future.value();
+    }
+
+    //Get document
+    var docRef = communities.doc(widget.community.firebaseDocumentId);
+
+    //Call .update() on that document
+    docRef.update({'name': _name, 'private': _private}).then((value) {
+      print("Community Updated");
+    }).catchError((error) => print("Failed to update community: $error"));
+
+    return Future.value();
   }
 
   // Create a global key that uniquely identifies the Form widget
@@ -129,12 +139,13 @@ class EditCommunityFormState extends State<EditCommunityForm> {
                 onPressed: () {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (_formKey.currentState!.validate()) {
-                    // bool private = false;
-                    // if (visibility == PublicPrivate.private) {
-                    //   private = true;
-                    // }
+                    bool private = false;
+                    if (visibility == PublicPrivate.private) {
+                      private = true;
+                    }
 
                     //addCommunity(nameController.text, private);
+                    editCommunity(nameController.text, private);
 
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing Data')),
