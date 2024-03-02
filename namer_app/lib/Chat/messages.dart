@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/chat.dart';
+import 'package:namer_app/Chat/chat.dart';
 import 'package:namer_app/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
