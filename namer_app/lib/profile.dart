@@ -41,16 +41,19 @@ class _ProfilePageState extends State<ProfilePage> {
 
   // Sample posts for the user
   List<Post> userPosts = [
-    Post(1, "https://example.com/image1.jpg", "Machete"),
-    Post(2, "https://example.com/image2.jpg", "Chainsaw"),
-    Post(3, "https://example.com/image3.jpg", "Kitchen Knife"),
-    Post(4, "https://example.com/image3.jpg", "Fancy Spoon"),
-    Post(5, "https://example.com/image3.jpg", "Horse"),
-    Post(6, "https://example.com/image3.jpg", "Screw Driver"),
-    Post(7, "https://example.com/image3.jpg", "Casio FX-991MS"),
-    Post(8, "https://example.com/image3.jpg", "Sock"),
-    Post(9, "https://example.com/image3.jpg", "Black paint"),
-    Post(10, "https://example.com/image3.jpg", "Hammer"),
+    Post(
+        1,
+        "https://images.pexels.com/photos/6011489/pexels-photo-6011489.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        "Machete"),
+    Post(2, "", "Chainsaw"),
+    Post(3, "", "Kitchen Knife"),
+    Post(4, "", "Fancy Spoon"),
+    Post(5, "", "Horse"),
+    Post(6, "", "Screw Driver"),
+    Post(7, "", "Casio FX-991MS"),
+    Post(8, "", "Sock"),
+    Post(9, "", "Black paint"),
+    Post(10, "", "Hammer"),
     // Add more posts as needed
   ];
 
