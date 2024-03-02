@@ -7,9 +7,11 @@ class MessageUsers {
   String name;
   String messageText;
   String imageURL;
+  String id;
   Timestamp time;
   MessageUsers(
-      {required this.name,
+      {required this.id,
+      required this.name,
       required this.messageText,
       required this.imageURL,
       required this.time}) {
@@ -22,9 +24,11 @@ class MessageList extends StatefulWidget {
   String name;
   String messageText;
   String imageURL;
+  String id;
   Timestamp time;
   MessageList(
-      {required this.name,
+      {required this.id,
+      required this.name,
       required this.messageText,
       required this.imageURL,
       required this.time});
@@ -71,8 +75,9 @@ class _MessageListState extends State<MessageList> {
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) {
           return ChatPage(
-            name: widget.name,
+            receiverName: widget.name,
             imageURL: widget.imageURL,
+            receiverId: widget.id,
           );
         }));
       },
@@ -231,9 +236,16 @@ class _MessagesPageState extends State<MessagesPage> {
 
 Widget _buildUserListItem(DocumentSnapshot document) {
   Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-  return MessageList(
+
+  if ("Admin" != data['name']) {
+    return MessageList(
       name: data['name'],
       messageText: data['messageText'],
       imageURL: data['imageURL'],
-      time: data['time']);
+      time: data['time'],
+      id: data['id'],
+    );
+  } else {
+    return Container();
+  }
 }

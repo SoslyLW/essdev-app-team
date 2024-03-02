@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/Chat/chat_service.dart';
 
 class ChatPage extends StatefulWidget {
-  final String name;
+  final String receiverName;
+  final String receiverId;
   final String imageURL;
-  const ChatPage({super.key, required this.name, required this.imageURL});
+  const ChatPage(
+      {required this.receiverName,
+      required this.imageURL,
+      required this.receiverId});
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -22,10 +26,11 @@ class _ChatPageState extends State<ChatPage> {
   final ChatService _chatService = ChatService();
 
   void sendMessage() async {
-    // if (_messageController.text.isNotEmpty) {
-    await _chatService.sendMessage(widget.name, _messageController.text);
-    _messageController.clear();
-    // }
+    if (_messageController.text.isNotEmpty) {
+      await _chatService.sendMessage(
+          widget.receiverName, widget.receiverId, _messageController.text);
+      _messageController.clear();
+    }
   }
 
   @override
@@ -68,7 +73,7 @@ class _ChatPageState extends State<ChatPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    widget.name,
+                    widget.receiverName,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   SizedBox(
@@ -130,7 +135,8 @@ class _ChatPageState extends State<ChatPage> {
 
   Widget _buildMessageList() {
     return StreamBuilder(
-      stream: _chatService.getMessages(widget.name),
+      stream:
+          _chatService.getMessages(widget.receiverId, "sUA4ZVLUjoVp4txYb9W2"),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Text('Error${snapshot.error}');

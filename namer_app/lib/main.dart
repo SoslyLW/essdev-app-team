@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/messages.dart';
+import 'package:namer_app/Chat/messages.dart';
 import 'package:provider/provider.dart';
 import 'package:namer_app/communitiesHomePage.dart';
 import 'package:namer_app/screens/toolCardPage.dart';
