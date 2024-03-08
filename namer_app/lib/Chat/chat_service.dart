@@ -1,14 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/Chat/message.dart';
 
 class ChatService extends ChangeNotifier {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future<void> sendMessage(
       String receiverName, String receiverId, String message) async {
-    const String currentUserName = "Admin";
-    const String currentUserId = "sUA4ZVLUjoVp4txYb9W2";
+    final String currentUserName = _firebaseAuth.currentUser!.email.toString();
+    final String currentUserId = _firebaseAuth.currentUser!.uid;
     Message newMessage = Message(
       senderId: currentUserId,
       senderName: currentUserName,
@@ -27,6 +29,16 @@ class ChatService extends ChangeNotifier {
         .doc(chatRoom)
         .collection('messages')
         .add(newMessage.toMap());
+
+    await _firebaseFirestore
+        .collection('chat')
+        .doc(receiverId)
+        .update({'messageText': message, 'time': newMessage.timestamp});
+
+    await _firebaseFirestore
+        .collection('chat')
+        .doc(currentUserId)
+        .update({'messageText': message, 'time': newMessage.timestamp});
   }
 
   Stream<QuerySnapshot> getMessages(String userId, String otherUserId) {

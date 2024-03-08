@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:namer_app/Chat/chat.dart';
-import 'package:namer_app/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MessageUsers {
@@ -236,8 +236,8 @@ class _MessagesPageState extends State<MessagesPage> {
 
 Widget _buildUserListItem(DocumentSnapshot document) {
   Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-
-  if ("Admin" != data['name']) {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  if (_firebaseAuth.currentUser!.email.toString() != data['name']) {
     return MessageList(
       name: data['name'],
       messageText: data['messageText'],
