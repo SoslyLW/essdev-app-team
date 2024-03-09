@@ -9,10 +9,8 @@ import 'package:namer_app/community.dart';
 /// - Remove index number from Browse Communities list
 /// - Change over to FutureBuilder to have a loading screen in small delay before data is loaded
 /// Load one local copy of the database first and only update that copy when the user makes a change
-/// - Transition to using a future builder to show the communities
 
 List<Community> allCommunities = [];
-bool firstload = true;
 
 class CommunitiesHomePage extends StatefulWidget {
   @override
@@ -20,10 +18,15 @@ class CommunitiesHomePage extends StatefulWidget {
 }
 
 class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
-  bool isDark = false;
+  bool firstload = true;
   List<Community> communities = [];
 
   Future<void> getData() async {
+    //Only load the data once
+    if (!firstload) {
+      return;
+    }
+
     var dataFromFirebase =
         await FirebaseFirestore.instance.collection('communities').get();
 
@@ -32,6 +35,8 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
     allCommunities = communitiesDocuments
         .map((commDoc) => Community.fromDoc(commDoc))
         .toList();
+
+    communities = allCommunities.toList();
 
     if (firstload) {
       setState(() {
@@ -52,10 +57,6 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
-    // getData();
-
-    communities = allCommunities.toList();
 
     return Scaffold(
       body: SafeArea(
@@ -119,7 +120,7 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
             builder: (context) {
               return AddCommunityPage();
             },
-          ));
+          )).then((_) => setState(() {}));
         },
         label: Text("Add"),
         icon: Icon(
@@ -140,7 +141,10 @@ Widget CommunitiesList(List<Community> communities, ThemeData theme) {
       padding: EdgeInsets.only(bottom: 16),
       physics: BouncingScrollPhysics(),
       itemBuilder: (context, index) {
-        return CommunityCard(theme: theme, community: communities[index]);
+        return CommunityCard(
+          theme: theme,
+          community: communities[index],
+        );
       },
     ),
   );

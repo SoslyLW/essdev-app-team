@@ -37,8 +37,8 @@ class Community {
   }
 }
 
-class CommunityCard extends StatelessWidget {
-  const CommunityCard({
+class CommunityCard extends StatefulWidget {
+  CommunityCard({
     super.key,
     required this.theme,
     required this.community,
@@ -48,22 +48,28 @@ class CommunityCard extends StatelessWidget {
   final Community community;
 
   @override
+  State<CommunityCard> createState() => _CommunityCardState();
+}
+
+class _CommunityCardState extends State<CommunityCard> {
+  @override
   Widget build(BuildContext context) {
     return Card(
-        color: theme.colorScheme.secondary,
+        color: widget.theme.colorScheme.secondary,
         child: ListTile(
-          leading: community.icon,
+          leading: widget.community.icon,
           title: Text(
-            community.name,
+            widget.community.name,
             overflow: TextOverflow.ellipsis,
           ),
-          trailing: Text(community.id.toString()),
+          trailing: Text(widget.community.id.toString()),
           onTap: () {
             Navigator.push(context, MaterialPageRoute(
               builder: (context) {
-                return CommunitiesDetailPage(community);
+                return CommunitiesDetailPage(
+                    widget.community.firebaseDocumentId);
               },
-            ));
+            )).then((_) => setState(() {}));
           },
         ));
   }
