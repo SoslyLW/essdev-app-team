@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:namer_app/addCommunityPage.dart';
@@ -21,7 +23,7 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
   bool isDark = false;
   List<Community> communities = [];
 
-  void getData() async {
+  Future<void> getData() async {
     var dataFromFirebase =
         await FirebaseFirestore.instance.collection('communities').get();
 
@@ -51,7 +53,7 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    getData();
+    // getData();
 
     communities = allCommunities.toList();
 
@@ -93,23 +95,19 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
                           borderSide: BorderSide(color: Colors.grey.shade100))),
                 ),
               ),
-              //Items (Scrollable)
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 16, left: 16, right: 16, bottom: 4),
-                  child: ListView.builder(
-                    itemCount: communities.length,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.only(bottom: 16),
-                    physics: BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return CommunityCard(
-                          theme: theme, community: communities[index]);
-                    },
-                  ),
-                ),
-              ),
+                  child: FutureBuilder(
+                      future: getData(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return CommunitiesList(communities, theme);
+                        } else {
+                          return Center(
+                              child: CircularProgressIndicator(
+                            color: theme.colorScheme.onPrimary,
+                          ));
+                        }
+                      })),
             ],
           ),
         ),
@@ -131,4 +129,19 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
       ),
     );
   }
+}
+
+Widget CommunitiesList(List<Community> communities, ThemeData theme) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 4),
+    child: ListView.builder(
+      itemCount: communities.length,
+      shrinkWrap: true,
+      padding: EdgeInsets.only(bottom: 16),
+      physics: BouncingScrollPhysics(),
+      itemBuilder: (context, index) {
+        return CommunityCard(theme: theme, community: communities[index]);
+      },
+    ),
+  );
 }
