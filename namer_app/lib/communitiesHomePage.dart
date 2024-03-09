@@ -7,6 +7,7 @@ import 'package:namer_app/community.dart';
 /// - Remove index number from Browse Communities list
 /// - Change over to FutureBuilder to have a loading screen in small delay before data is loaded
 /// Load one local copy of the database first and only update that copy when the user makes a change
+/// - Transition to using a future builder to show the communities
 
 List<Community> allCommunities = [];
 bool firstload = true;
@@ -25,7 +26,6 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
         await FirebaseFirestore.instance.collection('communities').get();
 
     List communitiesDocuments = dataFromFirebase.docs;
-    //print(communitiesDocuments);
 
     allCommunities = communitiesDocuments
         .map((commDoc) => Community.fromDoc(commDoc))
