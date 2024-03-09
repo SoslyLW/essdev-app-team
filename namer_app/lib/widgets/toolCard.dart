@@ -75,7 +75,7 @@ class ToolCard extends StatelessWidget {
     required this.toolID,
   });
 
-  final int toolID;
+  final String toolID;
 
   // would usually then search database for matching
   // toolID, but we'll just use default tool for now
@@ -90,7 +90,7 @@ class ToolCard extends StatelessWidget {
     var appState = context.watch<MyAppState>();
 
     return FutureBuilder(
-      future: FirebaseFirestore.instance.collection("tools").doc(toolID.toString()).get(),
+      future: FirebaseFirestore.instance.collection("tools").doc(toolID).get(),
 
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
@@ -242,7 +242,12 @@ class ToolCard extends StatelessWidget {
                         onPressed: () => {
                           // add a requested toolCard to the list of cards
                           // to be displayed on the page
-                          appState.addCard(RequestedToolCard(tool: tool, requester: "USER")),
+
+                          // got rid of this because there is no longer a global cardslist.
+                          // Everything done by queries now.
+                          // appState.addCard(RequestedToolCard(tool: tool, requester: "USER")),
+
+                          // DOES NOTHING RIGHT NOW BUT WILL SEND MESSAGE TO TOOL OWNER
                         },
                         child: Text("REQUEST"),
                         ),

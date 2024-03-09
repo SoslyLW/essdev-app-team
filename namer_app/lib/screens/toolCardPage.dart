@@ -22,9 +22,15 @@
 // generate a 'toolCard' widget of the tool, which can then be requested.
 // this will require a database of tools and users.
 
+
+// UPDATE: Gonna want a dropdown that changes this page
+// between 'My Tools' and 'Available Tools'
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:namer_app/main.dart';
+import 'package:namer_app/widgets/myToolCard.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ToolCardPage extends StatelessWidget {
   const ToolCardPage({
@@ -36,30 +42,33 @@ class ToolCardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // watch the state of the app for changes
-    // to the list of cards to be displayed
     var appState = context.watch<MyAppState>();
 
-    // add a toolCard to the list of cards to be displayed
-    // appState.addCard(ToolCard(toolID: 1,));
+    return FutureBuilder(
+      future: FirebaseFirestore.instance.collection("tools").where("ownerID", isEqualTo: appState.thisUserID.toString()).get(),
 
-    var cardsList = appState.cardsList;
-
-    // Hey! It kinda works. That's cool.
-
-    return Center(
-      child: ListView(
-        padding: const EdgeInsets.all(8),
-        // children: [
-        //   SizedBox(height: 20),
-        //   ToolCard(toolID: 1,),
-        //   RequestedToolCard(toolID: 1,),
-        //   ToolCard(toolID: 1),
-        // ],
-        children: cardsList
-      ),
-
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> query) {
+        if (query.connectionState == ConnectionState.done) {
+          var toolCardsList = <Widget>[];
+          toolCardsList.add(SizedBox(height:30));
+          for (var doc in query.data!.docs) {
+            print(doc.data());
+            var tool = doc.data();
+            toolCardsList.add(MyToolCard(tool: tool));
+          }
+          return SingleChildScrollView(
+            child: 
+              Column(
+                children: [...toolCardsList],
+              )
+          );
+        }
+        else {
+          return CircularProgressIndicator(
+            color: Colors.black,
+          );
+        }
+      }
     );
   }
-
 }

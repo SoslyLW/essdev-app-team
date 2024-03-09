@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/messages.dart';
-import 'package:namer_app/widgets/toolCard.dart';
 import 'package:provider/provider.dart';
 import 'package:namer_app/screens/toolCardPage.dart';
 import 'package:namer_app/communities.dart';
@@ -58,20 +57,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppState extends ChangeNotifier {
-  var cardsList = <Widget>[
-    SizedBox(height: 25,),
-    ToolCard(toolID: 1),
-    ToolCard(toolID: 2,),
-  ];
-
   // ID of the currently signed in user. To be used when creating
   // new tools. Automatically linked to current user.
-  var thisUserID = 1;
-
-  void addCard(Widget card) {
-    cardsList.add(card);
-    notifyListeners();
-  }
+  var thisUserID = "1";
 }
 
 class MyHomePage extends StatefulWidget {
