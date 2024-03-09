@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:namer_app/addCommunityPage.dart';
 import 'package:namer_app/community.dart';
+import 'package:namer_app/commmunityDetail.dart';
 
 /// TODO
 /// - Remove index number from Browse Communities list
@@ -43,6 +44,12 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
         firstload = false;
       });
     }
+  }
+
+  void updateState() {
+    setState(() {
+      firstload = true;
+    });
   }
 
   void filterCommunities(String query) {
@@ -101,7 +108,8 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
                       future: getData(),
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
-                          return CommunitiesList(communities, theme);
+                          return CommunitiesList(
+                              communities, theme, updateState);
                         } else {
                           return Center(
                               child: CircularProgressIndicator(
@@ -132,7 +140,8 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
   }
 }
 
-Widget CommunitiesList(List<Community> communities, ThemeData theme) {
+Widget CommunitiesList(
+    List<Community> communities, ThemeData theme, Function updateFunction) {
   return Padding(
     padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 4),
     child: ListView.builder(
@@ -144,6 +153,7 @@ Widget CommunitiesList(List<Community> communities, ThemeData theme) {
         return CommunityCard(
           theme: theme,
           community: communities[index],
+          updateFunction: updateFunction,
         );
       },
     ),

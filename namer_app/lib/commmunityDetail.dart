@@ -11,7 +11,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class CommunitiesDetailPage extends StatefulWidget {
   // final Community community;
   final String communityFirestoreId;
-  CommunitiesDetailPage(this.communityFirestoreId) : super();
+  final Function refreshHomeStateFunction;
+  CommunitiesDetailPage(
+      this.communityFirestoreId, this.refreshHomeStateFunction)
+      : super();
 
   @override
   State<CommunitiesDetailPage> createState() => _CommunitiesDetailPageState();
@@ -35,11 +38,13 @@ class _CommunitiesDetailPageState extends State<CommunitiesDetailPage> {
 
     void handleClick(int listItem) {
       switch (listItem) {
+        //Switch to edit page
         case 0:
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return EditCommunityPage(community!);
-          })).then((_) => setState(() {}));
-        //Switch to edit page
+          })).then((_) => setState(() {
+                widget.refreshHomeStateFunction();
+              }));
         case 1:
         // Navigator.push(context, MaterialPageRoute(builder: (context) {
         //   return AddCommunityPage();

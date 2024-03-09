@@ -42,10 +42,12 @@ class CommunityCard extends StatefulWidget {
     super.key,
     required this.theme,
     required this.community,
+    required this.updateFunction,
   });
 
   final ThemeData theme;
-  final Community community;
+  Community community;
+  final Function updateFunction;
 
   @override
   State<CommunityCard> createState() => _CommunityCardState();
@@ -67,9 +69,9 @@ class _CommunityCardState extends State<CommunityCard> {
             Navigator.push(context, MaterialPageRoute(
               builder: (context) {
                 return CommunitiesDetailPage(
-                    widget.community.firebaseDocumentId);
+                    widget.community.firebaseDocumentId, widget.updateFunction);
               },
-            )).then((_) => setState(() {}));
+            ));
           },
         ));
   }
