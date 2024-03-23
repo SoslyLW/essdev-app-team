@@ -2,11 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/community.dart';
 import 'package:namer_app/editCommunityPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:namer_app/widgets/toolCard.dart';
 
 /// TODO
 /// - Figure out how to keep bottom and top bars when going from community home
 /// page to community detail page
 /// - Add Restriction on Community name overflow
+/// - Add ability to delete a community
+
+List<Tool> communityTools = [];
+
+Future<void> getToolsData(Community community) async {
+  //Reset tools list
+  communityTools = [];
+
+  //Get list of users from community document
+  if (community.users.isNotEmpty) {
+    //Get list of tools from users
+    var dataFromFirebase = await FirebaseFirestore.instance
+        .collection('logan_tools')
+        .where('ownerID', whereIn: community.users)
+        .get();
+
+    communityTools =
+        dataFromFirebase.docs.map((toolDoc) => Tool.fromDoc(toolDoc)).toList();
+  }
+}
 
 class CommunitiesDetailPage extends StatefulWidget {
   // final Community community;
@@ -75,7 +96,7 @@ class _CommunitiesDetailPageState extends State<CommunitiesDetailPage> {
               future: getCommunity(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
-                  return CommunityDetailPageBody(community);
+                  return CommunityDetailPageBody(community, theme);
                 } else {
                   return Center(
                       child: CircularProgressIndicator(
@@ -87,7 +108,7 @@ class _CommunitiesDetailPageState extends State<CommunitiesDetailPage> {
   }
 }
 
-Widget CommunityDetailPageBody(Community? community) {
+Widget CommunityDetailPageBody(Community? community, ThemeData theme) {
   return Padding(
     padding: const EdgeInsets.only(top: 16),
     child: Column(
@@ -123,12 +144,34 @@ Widget CommunityDetailPageBody(Community? community) {
         ),
         //Items (Scrollable)
         Expanded(
-          child: Padding(
-            padding:
-                const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 4),
-          ),
-        )
+            child: FutureBuilder(
+                future: getToolsData(community),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return CommunityToolsList(communityTools, theme);
+                  } else {
+                    return Center(
+                        child: CircularProgressIndicator(
+                      color: theme.colorScheme.onPrimary,
+                    ));
+                  }
+                })),
       ],
+    ),
+  );
+}
+
+Widget CommunityToolsList(List<Tool> communityTools, ThemeData theme) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 4),
+    child: ListView.builder(
+      itemCount: communityTools.length,
+      shrinkWrap: true,
+      padding: EdgeInsets.only(bottom: 16),
+      physics: BouncingScrollPhysics(),
+      itemBuilder: (context, index) {
+        return CommunityToolCard(tool: communityTools[index], theme: theme);
+      },
     ),
   );
 }
