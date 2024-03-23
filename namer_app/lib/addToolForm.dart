@@ -3,11 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:namer_app/main.dart';
 
-/// TODO
-/// - Add Tool icon selector
-/// - Add ability to invite users from the main screen
-/// - Fix issue where selecting public/private erases the name
-
 enum PublicPrivate { public, private }
 
 class AddToolForm extends StatefulWidget {
@@ -22,10 +17,9 @@ class AddToolForm extends StatefulWidget {
 class AddToolFormState extends State<AddToolForm> {
   var tools = FirebaseFirestore.instance.collection('tools');
 
-  Future<void> addTool(String name, String condition, ownerID) {
-    // Call the user's CollectionReference to add a new user
+  Future<void> addTool(String name, String condition, String availability, ownerID) {
     return tools
-        .add({'name': name, 'condition': condition, 'ownerID': ownerID})
+        .add({'name': name, 'condition': condition, 'availability': availability, 'ownerID': ownerID})
         .then((value) => print("Tool Added"))
         .catchError((error) => print("Failed to add tool: $error"));
   }
@@ -47,12 +41,14 @@ class AddToolFormState extends State<AddToolForm> {
     // must have a unique name controller for each text field
     final nameController = TextEditingController();
     final conditionController = TextEditingController();
+    final availabilityController = TextEditingController();
     
     @override
     void dispose() {
       // Clean up the controller when the widget is disposed.
       nameController.dispose();
       conditionController.dispose();
+      availabilityController.dispose();
       super.dispose();
     }
 
@@ -111,6 +107,30 @@ class AddToolFormState extends State<AddToolForm> {
               ),
               controller: conditionController,
             ),
+            SizedBox(height: 10),
+            TextFormField(
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter some text';
+                }
+                return null;
+              },
+              decoration: InputDecoration(
+                hintText: "Availability (e.g. '6 Months')",
+                prefixIcon: Icon(
+                  Icons.business,
+                  color: Colors.grey.shade600,
+                  size: 20,
+                ),
+                filled: true,
+                fillColor: Colors.grey.shade100,
+                contentPadding: EdgeInsets.all(8),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(color: Colors.grey.shade100)),
+              ),
+              controller: availabilityController,
+            ),
             //Spacer
             Expanded(
               child:
@@ -127,7 +147,7 @@ class AddToolFormState extends State<AddToolForm> {
                 onPressed: () {
                   // Validate returns true if the form is valid, or false otherwise.
                   if (_formKey.currentState!.validate()) {
-                    addTool(nameController.text, conditionController.text, appState.thisUserID);
+                    addTool(nameController.text, conditionController.text, availabilityController.text, appState.thisUserID);
 
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('Processing Data')),

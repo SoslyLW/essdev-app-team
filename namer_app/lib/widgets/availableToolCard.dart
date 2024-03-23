@@ -1,13 +1,11 @@
-// ignore_for_file: file_names, prefer_interpolation_to_compose_strings
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:namer_app/main.dart';
 import 'package:provider/provider.dart';
 
-class MyToolCard extends StatelessWidget {
-  MyToolCard({
+class AvailableToolCard extends StatelessWidget {
+  AvailableToolCard({
     super.key,
     required this.tool,
   });
@@ -45,6 +43,37 @@ class MyToolCard extends StatelessWidget {
                             fontSize: 24,
                           ),
                         ),
+                        FutureBuilder<dynamic>(
+                              // future: getUserName(tool["ownerID"]), 
+                              future: FirebaseFirestore.instance.collection("users").doc(tool["ownerID"].toString()).get(),
+                              
+                              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                                if (snapshot.connectionState == ConnectionState.done) { 
+                                  Map<String, dynamic> owner = snapshot.data!.data() as Map<String, dynamic>;
+                                  return Column(
+                                    children: [
+                                      Text(
+                                        owner["name"],
+                                        style: TextStyle(
+                                          decoration: TextDecoration.underline
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          for (var i = 0; i < owner["rating"]; i++) Icon(Icons.star),
+                                          for (var i = 0; i < (5-owner["rating"]); i++) Icon(Icons.star_border)
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                }
+                                else {
+                                  return CircularProgressIndicator(
+                                    color: Colors.black,
+                                  );
+                                }
+                              }
+                            ),
                       ],
                     ),
                   ),
@@ -92,19 +121,9 @@ class MyToolCard extends StatelessWidget {
                   backgroundColor: MaterialStateProperty.all<Color>(theme.colorScheme.onPrimary),
                 ),
 
-                child: Text("DELETE"), 
+                child: Text("REQUEST"), 
                 
                 onPressed: () => {
-                  // THIS WORKS! just add visual cues and an 'are you sure?'
-                  // plus find out how to immediately refresh page if you can.
-                  FirebaseFirestore.instance.collection("tools").where("name", isEqualTo: tool["name"]).get().then(
-                    (QuerySnapshot query) {
-                      for (var doc in query.docs) {
-                        doc.reference.delete();
-                        appState.notifyListeners();
-                      }
-                    },
-                  ),
                 },
               )
             ],
