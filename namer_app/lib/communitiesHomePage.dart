@@ -3,13 +3,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:namer_app/addCommunityPage.dart';
 import 'package:namer_app/community.dart';
 import 'package:namer_app/commmunityDetail.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 /// TODO
 /// - Remove index number from Browse Communities list
 /// - Change over to FutureBuilder to have a loading screen in small delay before data is loaded
 /// Load one local copy of the database first and only update that copy when the user makes a change
+/// - Only shown communities that the user is a part of
+/// - Be able to join a community
+/// - Implement invites for private communities
 
 List<Community> allCommunities = [];
+int userId = 0;
 
 class CommunitiesHomePage extends StatefulWidget {
   @override
@@ -19,6 +24,14 @@ class CommunitiesHomePage extends StatefulWidget {
 class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
   bool firstload = true;
   List<Community> communities = [];
+
+  Future<void> getUserId() async {
+    //Get the user id using FirebaseAuth
+    final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+    final User? user = _firebaseAuth.currentUser;
+    var tempUID = user!.uid;
+  }
 
   Future<void> getData() async {
     //Only load the data once
