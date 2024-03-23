@@ -236,8 +236,8 @@ class _MessagesPageState extends State<MessagesPage> {
 
 Widget _buildUserListItem(DocumentSnapshot document) {
   Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  if (_firebaseAuth.currentUser!.email.toString() != data['name']) {
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  if (firebaseAuth.currentUser!.email.toString() != data['name']) {
     return MessageList(
       name: data['name'],
       messageText: data['messageText'],

@@ -6,23 +6,33 @@ import 'package:namer_app/communitiesHomePage.dart';
 import 'package:namer_app/screens/toolCardPage.dart';
 import 'package:namer_app/profile.dart';
 import 'package:namer_app/settings.dart';
-import 'package:namer_app/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:namer_app/addToolPage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  FirebaseFirestore db = FirebaseFirestore.instance;
+
   runApp(ChangeNotifierProvider(
     create: (context) => AuthService(),
-    child: const MyApp(),
+    child: MyApp(firestore: db,),
   ));
 }
 
+
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({
+    super.key,
+    required this.firestore,
+    });
+
+  final FirebaseFirestore firestore;
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +54,7 @@ class MyApp extends StatelessWidget {
               brightness: Brightness.light,
               error: Colors.red,
               onError: Colors.white,
-              surface:
-                  Color(0xFFf5ab00), //Default background for card-like widgets
+              surface:Color(0xFFf5ab00), //Default background for card-like widgets
               onSurface: Color(0xff241d0f)),
         ),
         home: MyHomePage(),
@@ -55,6 +64,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppState extends ChangeNotifier {
+  // ID of the currently signed in user. To be used when creating
+  // new tools. Automatically linked to current user.
+  var thisUserID = "1";
   var current = 0;
 }
 
@@ -88,12 +100,10 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = NotificationsPage();
+        page = AddToolPage();
       case 1:
-        page = ToolCardPage(
-          toolID: 1,
-        );
-      case 2:
+        page = ToolCardPage(toolID: 1,);
+      case 2:      
         page = MessagesPage();
       case 3:
         page = CommunitiesHomePage();
@@ -143,8 +153,8 @@ class _MyHomePageState extends State<MyHomePage> {
               label: 'Home',
             ),
             NavigationDestination(
-              icon: Icon(Icons.business),
-              label: 'Business',
+              icon: Icon(Icons.handyman),
+              label: 'Tools',
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.message),
@@ -172,3 +182,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 }
+
+
+
+ 
