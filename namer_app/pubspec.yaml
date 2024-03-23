@@ -1,7 +1,7 @@
 name: namer_app
 description: A new Flutter project.
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 version: 0.0.1+1
 
@@ -16,14 +16,20 @@ dependencies:
   provider: ^6.0.0
   firebase_core: ^2.24.2
   cloud_firestore: ^4.14.0
+  equatable: ^2.0.0
+  firebase_auth: ^4.16.0
   email_validator: ^2.1.17
   dob_input_field: ^2.0.0
   country_picker: ^2.0.23
-  firebase_auth: ^4.16.0
   calendar_date_picker2: ^0.5.5
   country_state_city: ^0.1.6
   csc_picker: ^0.2.7
   country_state_city_pro: ^0.0.6
+  country_state_city_picker: ^1.2.8
+  form_field_validator: ^1.1.0
+  password_field_validator: ^0.0.1
+  flutter_pw_validator: ^1.6.0
+  email_validator_flutter: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -33,6 +39,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
 
 
   

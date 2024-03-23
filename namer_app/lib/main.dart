@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:namer_app/loginpage.dart';
-import 'package:namer_app/messages.dart';
+import 'package:namer_app/Chat/messages.dart';
+import 'package:namer_app/auth/auth_service.dart';
 import 'package:provider/provider.dart';
 import 'package:namer_app/communitiesHomePage.dart';
 import 'package:namer_app/screens/toolCardPage.dart';
@@ -11,10 +12,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:namer_app/registerpage.dart';
 void main() async {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  runApp(ChangeNotifierProvider(
+    create: (context) => AuthService(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -61,6 +66,23 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Call the signIn method here
+    signIn();
+  }
+
+  void signIn() async {
+    final authService = Provider.of<AuthService>(context, listen: false);
+    try {
+      await authService.signInWithEmailandPassword(
+          "admin@google.com", "123456");
+    } catch (e) {
+      Container();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
