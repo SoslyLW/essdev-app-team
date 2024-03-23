@@ -67,6 +67,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '259613853445',
     projectId: 'essdev-tool-sharing-app',
     storageBucket: 'essdev-tool-sharing-app.appspot.com',
+    iosClientId: '259613853445-bimndk85ch6t8se3p9kfe2147d6nusqr.apps.googleusercontent.com',
     iosBundleId: 'com.example.namerApp',
   );
 
@@ -76,6 +77,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '259613853445',
     projectId: 'essdev-tool-sharing-app',
     storageBucket: 'essdev-tool-sharing-app.appspot.com',
+    iosClientId: '259613853445-vqds2ih6a0q09t8nfqm8ggo77kearkfb.apps.googleusercontent.com',
     iosBundleId: 'com.example.namerApp.RunnerTests',
   );
 }

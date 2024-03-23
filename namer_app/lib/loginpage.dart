@@ -3,11 +3,12 @@ import 'package:namer_app/main.dart';
 import 'package:namer_app/registerpage.dart';
 import 'package:provider/provider.dart';
 import'package:flutter/src/painting/gradient.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 class LoginPage extends StatefulWidget {
  @override
  State<LoginPage> createState() => _LoginPageState();
 }
+
   class _LoginPageState extends State<LoginPage> {
     @override
   Widget build(BuildContext context) {
