@@ -6,7 +6,6 @@ import 'package:namer_app/communitiesHomePage.dart';
 import 'package:namer_app/screens/toolCardPage.dart';
 import 'package:namer_app/profile.dart';
 import 'package:namer_app/settings.dart';
-import 'package:namer_app/home.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

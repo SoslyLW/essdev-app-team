@@ -3,10 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:namer_app/main.dart';
-import 'package:namer_app/widgets/requestedToolCard.dart';
 
-import 'package:namer_app/GetUser.dart';
-import 'package:namer_app/getTool.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 // This file exclusively defines the card to request
