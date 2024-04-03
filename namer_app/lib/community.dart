@@ -83,7 +83,7 @@ class _CommunityCardState extends State<CommunityCard> {
             widget.community.name,
             overflow: TextOverflow.ellipsis,
           ),
-          trailing: Text(widget.community.id.toString()),
+          // trailing: Text(widget.community.id.toString()), //for debugging
           onTap: () {
             Navigator.push(context, MaterialPageRoute(
               builder: (context) {

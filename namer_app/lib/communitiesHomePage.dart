@@ -4,12 +4,10 @@ import 'package:namer_app/addCommunityPage.dart';
 import 'package:namer_app/community.dart';
 import 'package:namer_app/commmunityDetail.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:namer_app/main.dart';
 
 /// TODO
-/// - Remove index number from Browse Communities list
-/// - Change over to FutureBuilder to have a loading screen in small delay before data is loaded
-/// Load one local copy of the database first and only update that copy when the user makes a change
-/// - Only shown communities that the user is a part of
 /// - Be able to join a community
 /// - Implement invites for private communities
 
@@ -25,22 +23,26 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
   bool firstload = true;
   List<Community> communities = [];
 
-  Future<void> getUserId() async {
-    //Get the user id using FirebaseAuth
-    final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-
-    final User? user = _firebaseAuth.currentUser;
-    var tempUID = user!.uid;
-  }
-
   Future<void> getData() async {
+    var appState = context.read<MyAppState>();
+    userId = int.parse(appState.thisUserID);
+
     //Only load the data once
     if (!firstload) {
       return;
     }
+    
+    //Get commmunities from Firebase where userId is in the users list
+    var dataFromFirebase;
 
-    var dataFromFirebase =
-        await FirebaseFirestore.instance.collection('communities').get();
+    if (userId == 0) { //0 is root user and can see all communities
+      dataFromFirebase = await FirebaseFirestore.instance.collection('communities').get();
+    } else {
+      dataFromFirebase = await FirebaseFirestore.instance
+        .collection('communities')
+        .where('list_of_users', arrayContains: userId)
+        .get();
+    }
 
     List communitiesDocuments = dataFromFirebase.docs;
 
