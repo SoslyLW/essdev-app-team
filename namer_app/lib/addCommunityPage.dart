@@ -27,6 +27,7 @@ class AddCommunityPage extends StatelessWidget {
           ),
         ),
       ),
+      appBar: AppBar(),
     );
   }
 }
