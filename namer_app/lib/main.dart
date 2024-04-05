@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
                   Color(0xFFf5ab00), //Default background for card-like widgets
               onSurface: Color(0xff241d0f)),
         ),
-        home: AuthGate(),
+        home: LoginPage(),
       ),
     );
   }
