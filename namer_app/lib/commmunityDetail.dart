@@ -16,13 +16,24 @@ Future<void> getToolsData(Community community) async {
   //Reset tools list
   communityTools = [];
 
+  //Convert list of ints to list of strings
+  List<String> stringUsers = community.users.map((e) => e.toString()).toList();
+
   //Get list of users from community document
   if (community.users.isNotEmpty) {
     //Get list of tools from users
     var dataFromFirebase = await FirebaseFirestore.instance
-        .collection('logan_tools')
+        .collection('tools')
         .where('ownerID', whereIn: community.users)
         .get();
+
+    //If the data was empty, try searching for user strings
+    if (dataFromFirebase.docs.isEmpty) {
+      dataFromFirebase = await FirebaseFirestore.instance
+          .collection('tools')
+          .where('ownerID', whereIn: stringUsers)
+          .get();
+    }
 
     communityTools =
         dataFromFirebase.docs.map((toolDoc) => Tool.fromDoc(toolDoc)).toList();

@@ -81,10 +81,12 @@ class Tool {
     if (doc.data().keys.toList().contains('condition')) {
       condition = doc['condition'];
     }
+    //Availability current not support due to type confusion
+    // String availability = "Unknown Availability";
+    // if (doc.data().keys.toList().contains('availability')) {
+    //   availability = doc['availability'];
+    // }
     int availability = 0;
-    if (doc.data().keys.toList().contains('availability')) {
-      availability = doc['availability'];
-    }
     int distance = 0;
     if (doc.data().keys.toList().contains('distance')) {
       distance = doc['distance'];
