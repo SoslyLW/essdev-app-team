@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:namer_app/main.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/src/painting/gradient.dart';
-import 'package:dob_input_field/dob_input_field.dart';
 import 'package:email_validator/email_validator.dart' as emailValidator;
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
-import 'package:country_picker/country_picker.dart';
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:password_field_validator/password_field_validator.dart';
+import 'package:username_validator/username_validator.dart';
+import 'package:intl/intl.dart';
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -30,6 +29,7 @@ final _emailAddressController = TextEditingController();
 final _countryController = TextEditingController();
 final _provinceController = TextEditingController();
 final _cityController = TextEditingController();
+
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class _RegisterPageState extends State<RegisterPage> {
@@ -123,6 +123,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               value.length == 1 ||
                               value != String) {
                             return 'Please enter a valid name';
+                          } else {
+                            return null;
                           }
                         },
                         onChanged: (value) {
@@ -139,44 +141,61 @@ class _RegisterPageState extends State<RegisterPage> {
                           labelStyle: TextStyle(color: Colors.black),
                         ),
                         onTap: () async {
-                          DateTime date = DateTime(1900);
+                          //DateTime date = DateTime(1900);
                           // Below line stops keyboard from appearing
                           FocusScope.of(context).requestFocus(new FocusNode());
-                          await showDatePicker(
+                          DateTime? pickedDate = await showDatePicker(
                             context: context,
                             initialDatePickerMode: DatePickerMode.year,
-                            initialDate: DateTime
-                                .now(), // Add the required initialDate argument
+                            initialDate: DateTime.now(), // Add the required initialDate argument
                             firstDate: DateTime(1900),
                             lastDate: DateTime.now(),
                           );
+                          if(pickedDate != null ){
+                      print(pickedDate);  //get the picked date in the format => 2022-07-04 00:00:00.000
+                      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                      print(formattedDate); //formatted date output using intl package =>  2022-07-04
+                        //You can format date as per your need
+                      setState(() {
+                         _birthdateController.text = formattedDate; //set foratted date to TextField value. 
+                      });
+                  }else{
+                      print("Date is not selected");
+                  }
                         },
                       )),
                       SizedBox(
                           child: TextFormField(
-                              controller: _userNameController,
-                              decoration: InputDecoration(
-                                labelText: 'Username',
-                                labelStyle: TextStyle(color: Colors.black),
-                                hintText: 'Only Alphabets and Numbers',
-                              ))),
-                      
+                        controller: _userNameController,
+                        decoration: InputDecoration(
+                          labelText: 'Username',
+                          labelStyle: TextStyle(color: Colors.black),
+                          hintText: 'Minimum of 3 characters',
+                        ),
+                        validator: (value) {
+                          if (!UValidator.validateThis(
+                              pattern: RegPattern.strict, username: value!)) {
+                            return 'Please Enter a valid username';
+                          }
+                          return null;
+                        },
+                      )),
                       SizedBox(
-                        child: TextFormField(
-                      controller: _emailAddressController,
-                      decoration: InputDecoration(
-                        labelText: 'Email Address',
-                        labelStyle: TextStyle(color: Colors.black),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your email address';
-                         } else if (!emailValidator.EmailValidator.validate(value)) {
-                           return 'Please enter a valid email address';
-                         } 
-                       },
-                    )),
-
+                          child: TextFormField(
+                        controller: _emailAddressController,
+                        decoration: InputDecoration(
+                          labelText: 'Email Address',
+                          labelStyle: TextStyle(color: Colors.black),
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email address';
+                          } else if (!emailValidator.EmailValidator.validate(
+                              value)) {
+                            return 'Please enter a valid email address';
+                          }
+                        },
+                      )),
                       SizedBox(
                         child: Column(
                           children: [

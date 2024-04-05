@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/auth/auth_gate.dart';
 import 'package:namer_app/loginpage.dart';
 import 'package:namer_app/Chat/messages.dart';
 import 'package:namer_app/auth/auth_service.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
                   Color(0xFFf5ab00), //Default background for card-like widgets
               onSurface: Color(0xff241d0f)),
         ),
-        home: MyHomePage(),
+        home: AuthGate(),
       ),
     );
   }
@@ -98,24 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = MessagesPage();
       case 3:
         page = CommunitiesHomePage();
-        case 4:
-        page = LoginPage();
-        break;
-        case 5:
-        page = RegisterPage();
-        break;
-      case 4:
-        page = LoginPage();
-        break;
-        case 5:
-        page = RegisterPage();
-        break;
-      case 4:
-        page = LoginPage();
-        break;
-        case 5:
-        page = RegisterPage();
-        break;
+      
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
@@ -175,16 +159,16 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.people_alt_outlined),
               label: 'Communities',
             ),
-            NavigationDestination(
-              selectedIcon: Icon(Icons.account_circle),
-              icon: Icon(Icons.account_circle),
-              label: 'Login Page',
-            ),
-             NavigationDestination(
-              selectedIcon: Icon(Icons.remember_me),
-              icon: Icon(Icons.remember_me),
-              label: 'Registration Page',
-            )
+            // NavigationDestination(
+            //   selectedIcon: Icon(Icons.account_circle),
+            //   icon: Icon(Icons.account_circle),
+            //   label: 'Login Page',
+            // ),
+            //  NavigationDestination(
+            //   selectedIcon: Icon(Icons.remember_me),
+            //   icon: Icon(Icons.remember_me),
+            //   label: 'Registration Page',
+            // )
           ],
         ),
         body: Row(

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:namer_app/loginpage.dart';
 import 'package:namer_app/main.dart';
 
 class AuthGate extends StatelessWidget {
@@ -11,11 +12,11 @@ class AuthGate extends StatelessWidget {
       body: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          //if (snapshot.hasData) {
+          if (snapshot.hasData) {
           return MyHomePage();
-          //} else {
-          //  return LoginPage();
-          //}s
+          } else {
+          return LoginPage();
+          }
         },
       ),
     );
