@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:namer_app/community.dart';
 
 /// TODO
 /// - Add community icon selector
@@ -8,24 +9,35 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 enum PublicPrivate { public, private }
 
-class AddCommunityForm extends StatefulWidget {
-  const AddCommunityForm({super.key});
+class EditCommunityForm extends StatefulWidget {
+  final Community community;
+  const EditCommunityForm(this.community);
 
   @override
-  AddCommunityFormState createState() {
-    return AddCommunityFormState();
+  EditCommunityFormState createState() {
+    return EditCommunityFormState();
   }
 }
 
-class AddCommunityFormState extends State<AddCommunityForm> {
+class EditCommunityFormState extends State<EditCommunityForm> {
   var communities = FirebaseFirestore.instance.collection('communities');
 
-  Future<void> addCommunity(String _name, bool _private) {
-    // Call the user's CollectionReference to add a new user
-    return communities
-        .add({'icon': null, 'name': _name, 'private': _private})
-        .then((value) => print("Community Added"))
-        .catchError((error) => print("Failed to add community: $error"));
+  Future<void> editCommunity(String _name, bool _private) {
+    //Check if community has a document ID
+    if (widget.community.firebaseDocumentId == "") {
+      print("Error: No document ID");
+      return Future.value();
+    }
+
+    //Get document
+    var docRef = communities.doc(widget.community.firebaseDocumentId);
+
+    //Call .update() on that document
+    docRef.update({'name': _name, 'private': _private}).then((value) {
+      print("Community Updated");
+    }).catchError((error) => print("Failed to update community: $error"));
+
+    return Future.value();
   }
 
   // Create a global key that uniquely identifies the Form widget
@@ -36,14 +48,28 @@ class AddCommunityFormState extends State<AddCommunityForm> {
   final _formKey = GlobalKey<FormState>();
   PublicPrivate? visibility = PublicPrivate.public;
   String updatedName = "";
+  bool changedPrivacy = false;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final nameController = TextEditingController();
 
+    //Setup name field
     if (updatedName != "") {
       nameController.text = updatedName;
+    } else {
+      nameController.text = widget.community.name.toString();
+    }
+
+    //Setup visibility
+    if (!changedPrivacy) {
+      if (widget.community.private) {
+        print("Private");
+        visibility = PublicPrivate.private;
+      } else {
+        visibility = PublicPrivate.public;
+      }
     }
 
     @override
@@ -94,6 +120,7 @@ class AddCommunityFormState extends State<AddCommunityForm> {
                     onChanged: (PublicPrivate? value) {
                       if (value != null) {
                         updatedName = nameController.text;
+                        changedPrivacy = true;
                         setState(() => visibility = value);
                       }
                     },
@@ -109,6 +136,7 @@ class AddCommunityFormState extends State<AddCommunityForm> {
                     onChanged: (PublicPrivate? value) {
                       if (value != null) {
                         updatedName = nameController.text;
+                        changedPrivacy = true;
                         setState(() => visibility = value);
                       }
                     },
@@ -138,7 +166,7 @@ class AddCommunityFormState extends State<AddCommunityForm> {
                       private = true;
                     }
 
-                    addCommunity(nameController.text, private);
+                    editCommunity(nameController.text, private);
 
                     //Exit the form
                     Navigator.pop(context);

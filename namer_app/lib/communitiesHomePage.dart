@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:namer_app/addCommunityPage.dart';
 import 'package:namer_app/community.dart';
+import 'package:namer_app/commmunityDetail.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
+import 'package:namer_app/main.dart';
 
-List<Community> allCommunities = [
-  Community.Default(),
-  Community("Smith Engineering", Icon(Icons.handyman)),
-  Community("Queen's Engineering", Icon(Icons.engineering)),
-  Community("Rich People District", Icon(Icons.currency_exchange_outlined)),
-  Community("Bus People", Icon(Icons.bus_alert)),
-  Community("Shipping Company", Icon(Icons.local_shipping)),
-  Community("Really Super Duper Long Name For Testing Ridiculous",
-      Icon(Icons.horizontal_rule)),
-  Community("Smith Engineering", Icon(Icons.handyman)),
-  Community("Smith Engineering", Icon(Icons.handyman)),
-  Community("Smith Engineering", Icon(Icons.handyman)),
-];
+/// TODO
+/// - Be able to join a community
+/// - Implement invites for private communities
+
+List<Community> allCommunities = [];
+int userId = 0;
 
 class CommunitiesHomePage extends StatefulWidget {
   @override
@@ -22,8 +20,50 @@ class CommunitiesHomePage extends StatefulWidget {
 }
 
 class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
-  bool isDark = false;
-  List<Community> communities = allCommunities;
+  bool firstload = true;
+  List<Community> communities = [];
+
+  Future<void> getData() async {
+    var appState = context.read<MyAppState>();
+    userId = int.parse(appState.thisUserID);
+
+    //Only load the data once
+    if (!firstload) {
+      return;
+    }
+    
+    //Get commmunities from Firebase where userId is in the users list
+    var dataFromFirebase;
+
+    if (userId == 0) { //0 is root user and can see all communities
+      dataFromFirebase = await FirebaseFirestore.instance.collection('communities').get();
+    } else {
+      dataFromFirebase = await FirebaseFirestore.instance
+        .collection('communities')
+        .where('list_of_users', arrayContains: userId)
+        .get();
+    }
+
+    List communitiesDocuments = dataFromFirebase.docs;
+
+    allCommunities = communitiesDocuments
+        .map((commDoc) => Community.fromDoc(commDoc))
+        .toList();
+
+    communities = allCommunities.toList();
+
+    if (firstload) {
+      setState(() {
+        firstload = false;
+      });
+    }
+  }
+
+  void updateState() {
+    setState(() {
+      firstload = true;
+    });
+  }
 
   void filterCommunities(String query) {
     setState(() {
@@ -76,23 +116,20 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
                           borderSide: BorderSide(color: Colors.grey.shade100))),
                 ),
               ),
-              //Items (Scrollable)
               Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 16, left: 16, right: 16, bottom: 4),
-                  child: ListView.builder(
-                    itemCount: communities.length,
-                    shrinkWrap: true,
-                    padding: EdgeInsets.only(bottom: 16),
-                    physics: BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return CommunityCard(
-                          theme: theme, community: communities[index]);
-                    },
-                  ),
-                ),
-              ),
+                  child: FutureBuilder(
+                      future: getData(),
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          return CommunitiesList(
+                              communities, theme, updateState);
+                        } else {
+                          return Center(
+                              child: CircularProgressIndicator(
+                            color: theme.colorScheme.onPrimary,
+                          ));
+                        }
+                      })),
             ],
           ),
         ),
@@ -104,7 +141,7 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
             builder: (context) {
               return AddCommunityPage();
             },
-          ));
+          )).then((_) => setState(() {}));
         },
         label: Text("Add"),
         icon: Icon(
@@ -114,4 +151,24 @@ class _CommunitiesHomePageState extends State<CommunitiesHomePage> {
       ),
     );
   }
+}
+
+Widget CommunitiesList(
+    List<Community> communities, ThemeData theme, Function updateFunction) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 16, left: 16, right: 16, bottom: 4),
+    child: ListView.builder(
+      itemCount: communities.length,
+      shrinkWrap: true,
+      padding: EdgeInsets.only(bottom: 16),
+      physics: BouncingScrollPhysics(),
+      itemBuilder: (context, index) {
+        return CommunityCard(
+          theme: theme,
+          community: communities[index],
+          updateFunction: updateFunction,
+        );
+      },
+    ),
+  );
 }
