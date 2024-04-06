@@ -159,16 +159,6 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.people_alt_outlined),
               label: 'Communities',
             ),
-            // NavigationDestination(
-            //   selectedIcon: Icon(Icons.account_circle),
-            //   icon: Icon(Icons.account_circle),
-            //   label: 'Login Page',
-            // ),
-            //  NavigationDestination(
-            //   selectedIcon: Icon(Icons.remember_me),
-            //   icon: Icon(Icons.remember_me),
-            //   label: 'Registration Page',
-            // )
           ],
         ),
         body: Row(

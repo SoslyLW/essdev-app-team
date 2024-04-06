@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/auth/auth_gate.dart';
 import 'package:namer_app/main.dart';
 import 'package:namer_app/registerpage.dart';
 import 'package:provider/provider.dart';
@@ -15,12 +16,42 @@ class _LoginPageState extends State<LoginPage> {
   final _emailAddressController = TextEditingController();
 
 void signUserIn() async{
-  await FirebaseAuth.instance.signInWithEmailAndPassword(
+  try {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
     email: _emailAddressController.text,
     password: _passwordController.text
     );
+     Navigator.pop(context);
+  } on FirebaseAuthException catch (e) {
+    if (e.code == 'user-not-found') {
+      wrongEmailMessage();
+    } else if (e.code == 'wrong-password') {
+       wrongPasswordMessage();
+    }
+  }
+    Navigator.push(context, MaterialPageRoute(builder: (context) => AuthGate()));
 }
 
+void wrongEmailMessage(){
+  showDialog(
+    context: context, 
+    builder: (context){
+      return const AlertDialog(
+        title: Text('Incorrect Email'),
+        );
+    },
+    );
+}
+void wrongPasswordMessage(){
+  showDialog(
+    context: context, 
+    builder: (context){
+      return const AlertDialog(
+        title: Text('Incorrect Password'),
+        );
+    },
+    );
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(

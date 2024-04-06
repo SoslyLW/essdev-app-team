@@ -17,7 +17,7 @@ class Notification {
           Icons.map,
           size: 50,
         );
-}
+    }
 
 class NotificationsList extends StatefulWidget {
   List<Notification> notifications;
