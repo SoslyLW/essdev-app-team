@@ -66,8 +66,9 @@ class MyApp extends StatelessWidget {
 class MyAppState extends ChangeNotifier {
   // ID of the currently signed in user. To be used when creating
   // new tools. Automatically linked to current user.
-  var thisUserID = "1";
+  var thisUserID = "2";
   var current = 0;
+  var userName = "admin@google.com";
 }
 
 class MyHomePage extends StatefulWidget {
@@ -77,7 +78,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   var selectedIndex = 0;
-
+  
   @override
   void initState() {
     super.initState();
@@ -97,12 +98,24 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    var appState = context.watch<MyAppState>();
+
+    // Set the global current user to the one associated with the global email in the database.
+    FirebaseFirestore.instance.collection("users").where("personalEmail", isEqualTo: appState.userName).get().then(
+      (querySnapshot) {
+        for (var docSnapshot in querySnapshot.docs) {
+          appState.thisUserID = docSnapshot.data()["userID"];
+        }
+      },
+      onError: (e) => print("Error completing: $e"),
+    );
+
     Widget page;
     switch (selectedIndex) {
       case 0:
-        page = AddToolPage();
-      case 1:
         page = ToolCardPage(toolID: 1,);
+      case 1:
+        page = AddToolPage();
       case 2:      
         page = MessagesPage();
       case 3:
@@ -149,12 +162,12 @@ class _MyHomePageState extends State<MyHomePage> {
           destinations: const <Widget>[
             NavigationDestination(
               selectedIcon: Icon(Icons.home),
-              icon: Icon(Icons.home_outlined),
-              label: 'Home',
+              icon: Icon(Icons.search),
+              label: 'Browse',
             ),
             NavigationDestination(
               icon: Icon(Icons.handyman),
-              label: 'Tools',
+              label: 'Add Tool',
             ),
             NavigationDestination(
               selectedIcon: Icon(Icons.message),
