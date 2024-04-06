@@ -48,7 +48,6 @@ class ToolCardPage extends StatelessWidget {
                     var toolCardsList = <Widget>[];
                     toolCardsList.add(SizedBox(height:10));
                     for (var doc in query.data!.docs) {
-                      print(doc.data());
                       var tool = doc.data();
                       toolCardsList.add(AvailableToolCard(tool: tool));
                     }
@@ -72,7 +71,6 @@ class ToolCardPage extends StatelessWidget {
                     var toolCardsList = <Widget>[];
                     toolCardsList.add(SizedBox(height:10));
                     for (var doc in query.data!.docs) {
-                      print(doc.data());
                       var tool = doc.data();
                       toolCardsList.add(MyToolCard(tool: tool));
                     }

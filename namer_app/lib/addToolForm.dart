@@ -70,7 +70,7 @@ class AddToolFormState extends State<AddToolForm> {
               decoration: InputDecoration(
                 hintText: "Tool Name",
                 prefixIcon: Icon(
-                  Icons.business,
+                  Icons.handyman_outlined,
                   color: Colors.grey.shade600,
                   size: 20,
                 ),
@@ -94,7 +94,7 @@ class AddToolFormState extends State<AddToolForm> {
               decoration: InputDecoration(
                 hintText: "Tool Condition (e.g. 'Good')",
                 prefixIcon: Icon(
-                  Icons.business,
+                  Icons.gpp_good_outlined,
                   color: Colors.grey.shade600,
                   size: 20,
                 ),
@@ -118,7 +118,7 @@ class AddToolFormState extends State<AddToolForm> {
               decoration: InputDecoration(
                 hintText: "Availability (e.g. '6 Months')",
                 prefixIcon: Icon(
-                  Icons.business,
+                  Icons.timelapse_rounded,
                   color: Colors.grey.shade600,
                   size: 20,
                 ),
@@ -154,7 +154,10 @@ class AddToolFormState extends State<AddToolForm> {
                     );
                   }
                 },
-                child: const Text('Submit'),
+                child: const Text(
+                  'SUBMIT',
+                  style: TextStyle(fontSize: 20),
+                  ),
               ),
             ),
           ],
