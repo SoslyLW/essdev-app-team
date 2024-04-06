@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/AddCommunityForm.dart';
+import 'package:namer_app/EditCommunityForm.dart';
+import 'package:namer_app/community.dart';
 
-class AddCommunityPage extends StatelessWidget {
-  AddCommunityPage() : super();
+class EditCommunityPage extends StatelessWidget {
+  final Community community;
+  EditCommunityPage(this.community) : super();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(top: 16),
@@ -17,17 +20,16 @@ class AddCommunityPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 16.0),
                 child: Text(
-                  "Add Community",
+                  "Edit " + community.name.toString(),
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
               ),
               //Items (Scrollable)
-              Expanded(child: AddCommunityForm()),
+              Expanded(child: EditCommunityForm(community)),
             ],
           ),
         ),
       ),
-      appBar: AppBar(),
     );
   }
 }

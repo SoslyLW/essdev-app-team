@@ -132,7 +132,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ],
           ),
         ),
-        Container(
+        SizedBox(
           width: 200.0, // Adjust the width as needed
           child: Slider(
             value: value,

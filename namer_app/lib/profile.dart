@@ -98,7 +98,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Text("Connect"),
               ),
               SizedBox(height: 16),
-              Container(
+              SizedBox(
                 width: 2 * (MediaQuery.of(context).size.width / 3),
                 child: TextField(
                   controller: searchController,
@@ -143,7 +143,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ToolCard(
-                                    toolID: filteredPosts[index].toolID),
+                                    toolID: filteredPosts[index].toolID.toString()),
                               ),
                             );
                           },

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:namer_app/AddCommunityForm.dart';
+import 'package:namer_app/addToolForm.dart';
 
-class AddCommunityPage extends StatelessWidget {
-  AddCommunityPage() : super();
+class AddToolPage extends StatelessWidget {
+  AddToolPage() : super();
 
   @override
   Widget build(BuildContext context) {
@@ -17,17 +17,16 @@ class AddCommunityPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 16.0),
                 child: Text(
-                  "Add Community",
+                  "Add Tool",
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                 ),
               ),
               //Items (Scrollable)
-              Expanded(child: AddCommunityForm()),
+              Expanded(child: AddToolForm()),
             ],
           ),
         ),
       ),
-      appBar: AppBar(),
     );
   }
 }
