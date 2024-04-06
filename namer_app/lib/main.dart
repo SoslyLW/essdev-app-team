@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/auth/auth_gate.dart';
+import 'package:namer_app/loginpage.dart';
 import 'package:namer_app/Chat/messages.dart';
 import 'package:namer_app/auth/auth_service.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +10,7 @@ import 'package:namer_app/profile.dart';
 import 'package:namer_app/settings.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:namer_app/registerpage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:namer_app/addToolPage.dart';
 
@@ -57,11 +60,11 @@ class MyApp extends StatelessWidget {
               surface:Color(0xFFf5ab00), //Default background for card-like widgets
               onSurface: Color(0xff241d0f)),
         ),
-        home: MyHomePage(),
+        home: LoginPage(),
       ),
     );
   }
-}
+} 
 
 class MyAppState extends ChangeNotifier {
   // ID of the currently signed in user. To be used when creating
@@ -120,6 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
         page = MessagesPage();
       case 3:
         page = CommunitiesHomePage();
+      
       default:
         throw UnimplementedError('no widget for $selectedIndex');
     }
