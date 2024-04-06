@@ -15,43 +15,45 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
   final _emailAddressController = TextEditingController();
 
-void signUserIn() async{
-  try {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-    email: _emailAddressController.text,
-    password: _passwordController.text
-    );
-     Navigator.pop(context);
-  } on FirebaseAuthException catch (e) {
-    if (e.code == 'user-not-found') {
-      wrongEmailMessage();
-    } else if (e.code == 'wrong-password') {
-       wrongPasswordMessage();
+  void signUserIn() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: _emailAddressController.text,
+          password: _passwordController.text);
+      Navigator.pop(context);
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => AuthGate()));
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        wrongEmailMessage();
+      } else if (e.code == 'wrong-password') {
+        wrongPasswordMessage();
+      }
     }
   }
-    Navigator.push(context, MaterialPageRoute(builder: (context) => AuthGate()));
-}
 
-void wrongEmailMessage(){
-  showDialog(
-    context: context, 
-    builder: (context){
-      return const AlertDialog(
-        title: Text('Incorrect Email'),
+  void wrongEmailMessage() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          title: Text('Incorrect Email'),
         );
-    },
+      },
     );
-}
-void wrongPasswordMessage(){
-  showDialog(
-    context: context, 
-    builder: (context){
-      return const AlertDialog(
-        title: Text('Incorrect Password'),
+  }
+
+  void wrongPasswordMessage() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const AlertDialog(
+          title: Text('Incorrect Password'),
         );
-    },
+      },
     );
-}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,42 +84,42 @@ void wrongPasswordMessage(){
                         width: 250,
                         child: TextFormField(
                           controller: _emailAddressController,
-                            obscureText: false ,
-                            decoration: InputDecoration(
-                          labelText: 'Email Address/Username',
-                          suffixIcon: Icon(
-                            Icons.person,
-                            size: 17,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            labelText: 'Email Address/Username',
+                            suffixIcon: Icon(
+                              Icons.person,
+                              size: 17,
+                            ),
                           ),
-                        ),
-                         validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter valid email address';
-                                }
-                                return null;
-                              },)),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter valid email address';
+                            }
+                            return null;
+                          },
+                        )),
                     Container(
                         width: 250,
                         child: TextFormField(
-                            controller: _passwordController,
-                            obscureText: true ,
-                            obscuringCharacter: "*",
-                            decoration: InputDecoration(
-                              labelText: 'Password',
-                              hintText: 'More than 6 characters',
-                              suffixIcon: Icon(
-                                Icons.lock_open_rounded,
-                                size: 17,
-                              ),
+                          controller: _passwordController,
+                          obscureText: true,
+                          obscuringCharacter: "*",
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                            hintText: 'More than 6 characters',
+                            suffixIcon: Icon(
+                              Icons.lock_open_rounded,
+                              size: 17,
                             ),
-                                validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter a password';
-                                }
-                                return null;
-                              },
-                            )
-                            ),
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter a password';
+                            }
+                            return null;
+                          },
+                        )),
                     Padding(
                         padding: EdgeInsets.fromLTRB(20, 20, 40, 20),
                         child: Row(
@@ -133,7 +135,7 @@ void wrongPasswordMessage(){
                           minWidth: 100,
                           height: 30,
                           onPressed: () {
-                           signUserIn();
+                            signUserIn();
                           },
                           shape: RoundedRectangleBorder(
                               side: BorderSide(color: Color(0xFFf5ab00)),
@@ -163,9 +165,7 @@ void wrongPasswordMessage(){
                             style: TextStyle(
                                 color: Color(0xff241d0f),
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20)
-                                )
-                                )
+                                fontSize: 20)))
                   ]))
         ])));
   }
